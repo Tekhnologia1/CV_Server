@@ -112,7 +112,7 @@ const Home = () => {
         {
             image: Crown,
             title: 'Premium',
-            description: ['Includes all services from Basic and Advance package', 'Includes all services from Basic and Advance package'],
+            description: ['Includes all services from Basic and Advance package', 'Monthly/quarterly webinars and seminars from industry experts on career scopes'],
         },
     ];
 
