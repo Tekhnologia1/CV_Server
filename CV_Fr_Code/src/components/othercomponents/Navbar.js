@@ -41,7 +41,14 @@ export default function WithSubnavigation() {
   const closeSignInModal = () => setIsSignInOpen(false);
 
   const openSignUpModal = () => setIsSignUpOpen(true);
-  const closeSignUpModal = () => setIsSignUpOpen(false);
+  const closeSignUpModal = () => {
+    setIsSignUpOpen(false);
+    refreshPage();
+  }
+  const refreshPage = () => {
+    window.location.reload();
+  };
+  
 
   return (
     <Box>
