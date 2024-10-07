@@ -13,11 +13,9 @@ import {
     Box,
     Image,
     Text,
-    VStack,
-    useDisclosure
+    VStack
 } from '@chakra-ui/react';
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
-import SignUpModal from 'src/views/pages/signup/Signup';
 
 const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
     const handleSignUpClick = () => {
@@ -31,9 +29,10 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                 <ModalOverlay />
                 <ModalContent
                     bg="#D1EEFF"
-                    p={6}
+                    p={{ base: 4, md: 6 }}
                     borderRadius="15px"
-                    maxWidth="500px"
+                    maxWidth={{ base: "100%", sm: "400px", md: "500px" }}
+                    mx={{ base: "10px", sm: "20px", md: "auto" }}
                 >
                     <ModalHeader position="relative">
                         {/* Back button at top left */}
@@ -41,15 +40,20 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                             variant="ghost"
                             onClick={onClose}
                             position="absolute"
-                            left="10px"
-                            top="10px"
+                            left={{ base: "5px", md: "10px" }}
+                            top={{ base: "5px", md: "10px" }}
+                            fontSize={{ base: "sm", md: "md" }}
                         >
                             Back
                         </Button>
 
                         {/* Logo centered */}
                         <Box display="flex" justifyContent="center">
-                            <Image src={cv_brand_logo} alt="Logo" boxSize="70px" />
+                            <Image 
+                                src={cv_brand_logo} 
+                                alt="Logo" 
+                                boxSize={{ base: "50px", md: "70px" }} 
+                            />
                         </Box>
 
                         <ModalCloseButton />
@@ -63,6 +67,7 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                                 focusBorderColor="blue.500"
                                 bg="white"
                                 borderRadius="5px"
+                                fontSize={{ base: "sm", md: "md" }}
                             />
                             <Input
                                 placeholder="Enter Password"
@@ -71,8 +76,9 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                                 focusBorderColor="blue.500"
                                 bg="white"
                                 borderRadius="5px"
+                                fontSize={{ base: "sm", md: "md" }}
                             />
-                            <Link href="#" alignSelf="flex-start" color="blue.600" fontSize="sm">
+                            <Link href="#" alignSelf="flex-start" color="blue.600" fontSize={{ base: "xs", md: "sm" }}>
                                 Forgot Password?
                             </Link>
                         </VStack>
@@ -85,17 +91,19 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                             width="100%"
                             mb={4}
                             isDisabled={true}
+                            fontSize={{ base: "sm", md: "md" }}
                         >
                             Sign In
                         </Button>
 
-                        <Text fontSize="md">
+                        <Text fontSize={{ base: "sm", md: "md" }}>
                             New here?{' '}
                             <Link
                                 href="#"
                                 color="blue.600"
                                 fontWeight="bold"
-                                // onClick={handleSignUpClick}  // Open SignUp modal on click
+                                fontSize={{ base: "sm", md: "md" }}
+                                onClick={handleSignUpClick}  // Open SignUp modal on click
                             >
                                 Sign Up
                             </Link>

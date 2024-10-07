@@ -18,7 +18,7 @@ import {
 
 const SignUpModal = ({ isOpen, onClose, onOpenSignIn }) => {
   const [currentModal, setCurrentModal] = React.useState('roleSelection');
-  const label_bgcolor = 'white'
+  const label_bgcolor = 'white';
   const handleRoleClick = (role) => {
     setCurrentModal(role);
   };
@@ -31,24 +31,26 @@ const SignUpModal = ({ isOpen, onClose, onOpenSignIn }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
-      <ModalContent p={6} borderRadius="15px" maxWidth="500px" bg={
+      <ModalContent p={{ base: 4, md: 6 }} borderRadius="15px" maxWidth="500px" bg={
         currentModal === 'studentForm' ? '#FBB562' :
-          currentModal === 'parentForm' ? '#EABFFF' :
-            currentModal === 'counsellorForm' ? '#BFE582' :
-              currentModal === 'businessPartnerForm' ? '#FBB562' :
-                '#FFFFFF'
-      }>
+        currentModal === 'parentForm' ? '#EABFFF' :
+        currentModal === 'counsellorForm' ? '#BFE582' :
+        currentModal === 'businessPartnerForm' ? '#FBB562' :
+        '#FFFFFF'
+      } mx={{ base: '10px', md: 'auto' }}>
         <ModalHeader position="relative">
           {/* Back button at the top-left corner */}
-          {currentModal !== 'roleSelection' && <Button
-            variant="ghost"
-            onClick={() => setCurrentModal('roleSelection')}
-            position="absolute"
-            left="10px"
-            top="10px"
-          >
-            Back
-          </Button>}
+          {currentModal !== 'roleSelection' && (
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentModal('roleSelection')}
+              position="absolute"
+              left="10px"
+              top="10px"
+            >
+              Back
+            </Button>
+          )}
 
           {/* Centered header text */}
           <Flex justifyContent="center" width="100%">
@@ -64,33 +66,31 @@ const SignUpModal = ({ isOpen, onClose, onOpenSignIn }) => {
         <ModalBody>
           {currentModal === 'roleSelection' && (
             <VStack spacing={5}>
-              <Grid templateColumns="repeat(2, 1fr)" gap={5}>
+              <Grid templateColumns={{ base: '1fr', md: 'repeat(2, 1fr)' }} gap={5} width="100%">
                 <Button bg="#FBBF24" height="120px" onClick={() => handleRoleClick('studentForm')}>
                   <Box textAlign="center">
-                    <Text fontSize="lg">Student</Text>
+                    <Text fontSize={{ base: 'md', md: 'lg' }}>Student</Text>
                   </Box>
                 </Button>
                 <Button bg="#D8B4FE" height="120px" onClick={() => handleRoleClick('parentForm')}>
                   <Box textAlign="center">
-                    <Text fontSize="lg">Parent</Text>
+                    <Text fontSize={{ base: 'md', md: 'lg' }}>Parent</Text>
                   </Box>
                 </Button>
                 <Button bg="#BBF7D0" height="120px" onClick={() => handleRoleClick('counsellorForm')}>
                   <Box textAlign="center">
-                    <Text fontSize="lg">Counsellor</Text>
+                    <Text fontSize={{ base: 'md', md: 'lg' }}>Counsellor</Text>
                   </Box>
                 </Button>
                 <Button bg="#BFDBFE" height="120px" onClick={() => handleRoleClick('businessPartnerForm')}>
                   <Box textAlign="center">
-                    <Text fontSize="lg">Business Partner</Text>
+                    <Text fontSize={{ base: 'md', md: 'lg' }}>Business Partner</Text>
                   </Box>
                 </Button>
               </Grid>
-              <Text>
+              <Text fontSize={{ base: 'sm', md: 'md' }}>
                 Have an account?{' '}
-                <Link href='#' color="blue.600"
-                // onClick={handleSignInClick}
-                >  {/* Link to open SignInModal */}
+                <Link href='#' color="blue.600"> {/* Link to open SignInModal */}
                   Sign In
                 </Link>
               </Text>
@@ -99,28 +99,22 @@ const SignUpModal = ({ isOpen, onClose, onOpenSignIn }) => {
 
           {/* Conditional rendering for specific forms */}
           {currentModal === 'studentForm' && (
-            <VStack spacing={4}>
+            <VStack spacing={4} width="100%">
               <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} />
               <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} />
               <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} />
               <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} />
               <Input placeholder="Select State" size="lg" bg={label_bgcolor} />
-              <Input placeholder="Select City" size="lg" bg={label_bgcolor}/>
+              <Input placeholder="Select City" size="lg" bg={label_bgcolor} />
               <Input placeholder="Select Institute" size="lg" bg={label_bgcolor} />
               <Input placeholder="Select Class" size="lg" bg={label_bgcolor} />
               <Input placeholder="Select Gender" size="lg" bg={label_bgcolor} />
               <Button colorScheme="yellow" width="100%">Get OTP</Button>
-              {/* <Text>
-                Have an account?{' '}
-                <Link color="blue.600" onClick={handleSignInClick}>
-                  Sign In
-                </Link>
-              </Text> */}
             </VStack>
           )}
 
           {currentModal === 'parentForm' && (
-            <VStack spacing={4}>
+            <VStack spacing={4} width="100%">
               <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} />
               <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} />
               <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} />
@@ -133,21 +127,19 @@ const SignUpModal = ({ isOpen, onClose, onOpenSignIn }) => {
           )}
 
           {currentModal === 'counsellorForm' && (
-            <VStack spacing={4}>
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Enter Contact Number" size="lg"bg={label_bgcolor} />
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Select State" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Select City" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Select City" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Select Highest Qualification" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Select Years of Experience" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Applying for Part Time/ Full Time" size="lg" bg={label_bgcolor}/>
-              <Input placeholder="Area of Expertise" size="lg" bg={label_bgcolor}/>
+            <VStack spacing={4} width="100%">
+              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Select State" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Select City" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Select Highest Qualification" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Select Years of Experience" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Applying for Part Time/ Full Time" size="lg" bg={label_bgcolor} />
+              <Input placeholder="Area of Expertise" size="lg" bg={label_bgcolor} />
 
               <Button colorScheme="red" width="100%">Next</Button>
-
             </VStack>
           )}
 
