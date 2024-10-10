@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -16,12 +16,32 @@ import {
     VStack
 } from '@chakra-ui/react';
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
+import SignUpModal from '../signup/Signup';
+import { BiUnderline } from 'react-icons/bi';
+// import handleRoleClick from "../signup/Signup";
 
-const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
-    const handleSignUpClick = () => {
-        onOpenSignUp();  // Open SignUp modal
-        onClose();       // Close SignIn modal
-    };
+const SignInModal = ({ isOpen, onClose }) => {
+    const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+    const tilecolor_purple = "#4d3acc";
+    const font_family = 'Poppins, sans-serif';
+
+    const openSignUpModal = () => {
+        setIsSignUpOpen(true);
+        onClose();
+    }
+
+    const closeSignUpModal = () => {
+        setIsSignUpOpen(false);
+        // handleRoleClick('roleSelection');
+    }
+
+
+
+
+    // const handleSignUpClick = () => {
+    //     onOpenSignUp();  // Open SignUp modal
+    //     onClose();       // Close SignIn modal
+    // };
 
     return (
         <>
@@ -49,10 +69,10 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
 
                         {/* Logo centered */}
                         <Box display="flex" justifyContent="center">
-                            <Image 
-                                src={cv_brand_logo} 
-                                alt="Logo" 
-                                boxSize={{ base: "50px", md: "70px" }} 
+                            <Image
+                                src={cv_brand_logo}
+                                alt="Logo"
+                                boxSize={{ base: "50px", md: "70px" }}
                             />
                         </Box>
 
@@ -78,7 +98,7 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                                 borderRadius="5px"
                                 fontSize={{ base: "sm", md: "md" }}
                             />
-                            <Link href="#" alignSelf="flex-start" color="blue.600" fontSize={{ base: "xs", md: "sm" }}>
+                            <Link href="#" alignSelf="flex-start" color="black" fontSize={{ base: "xs", md: "sm" }} textDecoration={'underline'}>
                                 Forgot Password?
                             </Link>
                         </VStack>
@@ -100,10 +120,11 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                             New here?{' '}
                             <Link
                                 href="#"
-                                color="blue.600"
+                                color={tilecolor_purple}
                                 fontWeight="bold"
                                 fontSize={{ base: "sm", md: "md" }}
-                                onClick={handleSignUpClick}  // Open SignUp modal on click
+                                fontFamily={font_family}
+                                onClick={openSignUpModal}  // Open SignUp modal on click
                             >
                                 Sign Up
                             </Link>
@@ -111,6 +132,12 @@ const SignInModal = ({ isOpen, onClose, onOpenSignUp }) => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
+
+            <SignUpModal
+                isOpen={isSignUpOpen}
+                onClose={closeSignUpModal}
+
+            />
         </>
     );
 };

@@ -17,6 +17,7 @@ import {
     useColorModeValue,
     UnorderedList,
     ListItem,
+    useBreakpointValue,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react'
@@ -59,6 +60,11 @@ const Services = () => {
     const lightGreenBg = '#d9ffd2';
     const tilecolor_purple = '#4d3acc';
     const testi_bg_color = '#ffebd2';
+    const title_size = ["2xl", "3xl", "4xl", "5xl"]
+    const demo_title_size = ["2xl", "3xl", "4xl", "5xl"]
+    const faq_title_size = ["xl", "2xl", "3xl", "4xl"]
+    const subtitle_size = ["xl", "xl", "2xl", "3xl"]
+    const font_family = 'Poppins, sans-serif'
 
     // Data for the 5 cards (images, titles, descriptions)
     const cardData1 = [
@@ -132,18 +138,18 @@ const Services = () => {
         {
             image: Triforce,
             title: 'Basic',
-            description: ['Testing solutions - DMIT and Psychometric tests', 'Personalized report for DMIT and Psychometric tests'],
+            description: ['Get enough time to decide the stream', 'Early skill development and mastery in line with the goal'],
 
         },
         {
             image: Star,
             title: 'Advanced',
-            description: ['Includes all services from basic package', 'A 30 minutes counseling session with student to finalize the career option'],
+            description: ['Informed decision making for your career', 'Early exploration and right stream selection'],
         },
         {
             image: Crown,
             title: 'Premium',
-            description: ['Includes all services from Basic and Advance package', 'Includes all services from Basic and Advance package'],
+            description: ['Informed decision making for your career', 'Early exploration and right stream selection'],
         },
     ];
 
@@ -187,15 +193,15 @@ const Services = () => {
     const [btnBgColor, setbtnBgColor] = useState('#4d3acc');
     const renderLeftColumn = (largeTitle, mediumTitle, points, btnLabel) => (
         <Box>
-            <Heading size="lg" mb={5} color={'#4d3acc'} style={{fontSize:'2.2rem'}}>{largeTitle}</Heading>
-            <Heading size="md" mb={4} style={{fontSize:'1.5rem'}}>{mediumTitle}</Heading>
-            <UnorderedList mb={5} style={{fontSize:'1.2rem', fontWeight:'500', marginTop:'25px', marginLeft:'-2px'}}>
+            <Heading size="lg" mb={5} color={'#4d3acc'} style={{ fontSize: '2.2rem' }}>{largeTitle}</Heading>
+            <Heading size="md" mb={4} style={{ fontSize: '1.5rem' }}>{mediumTitle}</Heading>
+            <UnorderedList mb={5} style={{ fontSize: '1.2rem', fontWeight: '500', marginTop: '25px', marginLeft: '-2px' }}>
                 {points.map((point, index) => (
                     <ListItem key={index} >{point}</ListItem>
                 ))}
             </UnorderedList>
             <CButton
-                style={{ backgroundColor: btnBgColor, color: '#ffffff', borderColor: btnBgColor, fontSize:'1.2rem', marginTop:'30px' }}
+                style={{ backgroundColor: btnBgColor, color: '#ffffff', borderColor: btnBgColor, fontSize: '1.2rem', marginTop: '30px' }}
                 onMouseEnter={() => setbtnBgColor('#8d7dfa')}
                 onMouseLeave={() => setbtnBgColor('#4d3acc')} >
                 {btnLabel}
@@ -215,67 +221,93 @@ const Services = () => {
                 <WithSubnavigation />
             </Box>
 
-            <Box className="body flex-grow-1" pt={0}>
+            <Box className="body flex-grow-1" pt={[0]}>
 
 
 
 
                 {/* 1stth Row - Title and Button Horizontally Centered */}
-                <Flex columns={[1, 2]} spacing={10} justify="center" align="center" mb={10} bgImage={bg_mask} style={{ paddingTop: "100px", paddingBottom: "100px" }}>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Heading color="#ffffff">
-                            Start your journey with
-                            Career Vidyalaya!
+                <Flex direction="column" align="center" justify="center" mb={10} bgImage={bg_mask} py={[8, 12]} px={[6, 10, 20]}>
+                    <Grid templateColumns={['1fr', '2fr 2fr']} gap={[10, 20, 40]} alignItems="center" justifyContent="center" >
+                        <Heading color="#ffffff" textAlign="center" fontSize={demo_title_size} >
+                            Start your journey with<br /> Career Vidyalaya!
                         </Heading>
-                    </Box>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Button ml={20} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} style={{ width: "220px", height: "60px" }} fontSize={20} fontWeight={700}>
+                        <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
                             Take a Demo
                         </Button>
-                    </Box>
-
+                    </Grid>
                 </Flex>
 
 
 
                 {/* 2nd row Categories */}
-                <Box p={4} style={{ paddingInline: "150px" }}>
+                <Box p={useBreakpointValue({ base: 4, md: 8 })} px={{ base: "20px", md: "150px" }}>
                     {/* First Row */}
-                    <Row className="mb-5 align-items-center"> {/* Added align-items-center */}
-                        <Col md={6}>
-                            {renderLeftColumn("Ārambha (आरम्भ)", "Class 7 and 8 – Start early to finish on top", ["Get enough time to decide the stream", "Early skill development and mastery in line with the goal", "Financial plantings in better way to support the dream career", "Clear direction and confidence with focused approach"], "Subscribe")}
-                        </Col>
-                        <Col md={6}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={10}>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
+                            {renderLeftColumn(
+                                "Ārambha (आरम्भ)",
+                                "Class 7 and 8 – Start early to finish on top",
+                                [
+                                    "Get enough time to decide the stream",
+                                    "Early skill development and mastery in line with the goal",
+                                    "Financial plantings in better way to support the dream career",
+                                    "Clear direction and confidence with focused approach",
+                                ],
+                                "Subscribe"
+                            )}
+                        </Flex>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
                             {renderRightColumn(Cate_1)}
-                        </Col>
-                    </Row>
+                        </Flex>
+                    </SimpleGrid>
 
                     {/* Second Row */}
-                    <Row className="mb-5 align-items-center"> {/* Added align-items-center */}
-                        <Col md={6}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} mb={10}>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
                             {renderRightColumn(Cate_2)}
-                        </Col>
-                        <Col md={6}>
-                            {renderLeftColumn("Madhyam (मध्यम)", "Class 9 and 10 - Get in the first available slot and start the journey", ["Informed decision making", "Early exploration and right stream selection", "Inapt planning of the entrance and preparatory examinations", "Self-awareness"], "Subscribe")}
-                        </Col>
-                    </Row>
+                        </Flex>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
+                            {renderLeftColumn(
+                                "Madhyam (मध्यम)",
+                                "Class 9 and 10 - Get in the first available slot and start the journey",
+                                [
+                                    "Informed decision making",
+                                    "Early exploration and right stream selection",
+                                    "Inapt planning of the entrance and preparatory examinations",
+                                    "Self-awareness",
+                                ],
+                                "Subscribe"
+                            )}
+                        </Flex>
+                    </SimpleGrid>
 
                     {/* Third Row */}
-                    <Row className="align-items-center"> {/* Added align-items-center */}
-                        <Col md={6}>
-                            {renderLeftColumn("Niśchaya (निश्चय)", "Class 11 and 12th - Time to decide your destination", ["Targeted course selection", "Appropriate college selection", "Enhanced and relevant skill acquisition", "Realistic goal setting with clarity and confidence"], "Subscribe")}
-                        </Col>
-                        <Col md={6}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
+                            {renderLeftColumn(
+                                "Niśchaya (निश्चय)",
+                                "Class 11 and 12th - Time to decide your destination",
+                                [
+                                    "Targeted course selection",
+                                    "Appropriate college selection",
+                                    "Enhanced and relevant skill acquisition",
+                                    "Realistic goal setting with clarity and confidence",
+                                ],
+                                "Subscribe"
+                            )}
+                        </Flex>
+                        <Flex justify={{ base: "center", md: "flex-start" }} align="center">
                             {renderRightColumn(Cate_3)}
-                        </Col>
-                    </Row>
+                        </Flex>
+                    </SimpleGrid>
                 </Box>
 
 
 
 
                 {/* 3th Row - Title and 3 Cards + Button with light green background */}
-                <Box p={5} mb={10} style={{ paddingInline: "350px" }}>
+                <Box bg={lightGreenBg} p={5} mb={10} px={['30px', '30px', '30px', '100px', '200px']}>
                     <Heading textAlign="center" mb={5} color={tilecolor_purple}>
                         Our Plans
                     </Heading>
@@ -290,28 +322,24 @@ const Services = () => {
                 </Box>
 
                 {/* 4th Row - Title and Button Horizontally Centered */}
-                <Flex columns={[1, 2]} spacing={10} justify="center" align="center" mb={10} bgImage={bg_mask} style={{ paddingTop: "100px", paddingBottom: "100px" }}>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Heading color="#ffffff">
-                            Start your journey with
-                            Career Vidyalaya!
+                {/* <Flex direction="column" align="center" justify="center" mb={10} bgImage={bg_mask} py={[8, 12]} px={[6, 10, 20]}>
+                    <Grid templateColumns={['1fr', '2fr 2fr']} gap={[10, 20, 40]} alignItems="center" justifyContent="center" >
+                        <Heading color="#ffffff" textAlign="center" fontSize={demo_title_size} >
+                            Start your journey with<br /> Career Vidyalaya!
                         </Heading>
-                    </Box>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Button ml={20} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} style={{ width: "220px", height: "60px" }} fontSize={20} fontWeight={700}>
+                        <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
                             Take a Demo
                         </Button>
-                    </Box>
-
-                </Flex>
+                    </Grid>
+                </Flex> */}
 
                 {/* 5rd Row - Title and 4 Cards */}
-                <Box mb={10} style={{ paddingInline: "150px" }}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box mb={10} px={['30px', '30px', '30px', '100px', '200px']}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Our Online Offerings
                     </Heading>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                        <Text>Shaping your Career</Text>
+                    <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
+                        <Text fontSize={subtitle_size} fontWeight="500">Shaping your Career</Text>
                     </Box>
                     <SimpleGrid columns={[1, 3]} spacing={8}>
                         {cardData2.slice(0, 3).map((card, i) => (
@@ -327,13 +355,13 @@ const Services = () => {
                 </Box>
 
                 {/* 7th Row - Card Slider */}
-                <Box bg={testi_bg_color} pb={10} px={5}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box bg={testi_bg_color} pb={10} px={[2, 5]}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Success Stories
                     </Heading>
-                    <Slider {...settings} columns={[1, 3]} spacing={12}>
+                    <Slider {...settings}>
                         {testimonial_slider.map((card, i) => (
-                            <SlicerCardComponent key={i} image={card.image} title={card.testi_name} description={card.description} />
+                            <SlicerCardComponent key={i} image={card.image} testi_name={card.testi_name} description={card.description} />
                         ))}
                     </Slider>
                 </Box>
@@ -341,30 +369,30 @@ const Services = () => {
 
 
                 {/* 8th Row - Title and Accordion */}
-                <Box mb={10} marginInline={300}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box mb={10} mx={[4, 8, 12]} px={['20px', '50px', '100px', '100px', '100px', '300px']}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={faq_title_size}>
                         FAQs: What people usually ask us?
                     </Heading>
                     <Accordion allowToggle>
                         {accordian.map((accord, i) => (
                             <AccordionItem key={i}>
-                                <h2>
-                                    <AccordionButton>
-                                        <Box flex="1" textAlign="left">
-                                            {accord.title}
-                                        </Box>
-                                        <AccordionIcon />
-                                    </AccordionButton>
-                                </h2>
+                                <AccordionButton>
+                                    <Box flex="1" textAlign="left" textColor={tilecolor_purple} fontSize={['md', 'md', 'lg']} fontWeight={'500'} fontFamily={font_family}>
+                                        {accord.title}
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
                                 <AccordionPanel pb={4}>
                                     {accord.description}
                                 </AccordionPanel>
                             </AccordionItem>
                         ))}
                     </Accordion>
-                    <Button variant="link" mt={3} color={tilecolor_purple}>
-                        Show More
-                    </Button>
+                    <Box display="flex" justifyContent="flex-end" mt={3}>
+                        <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'}>
+                            Show More FAQs
+                        </Button>
+                    </Box>
                 </Box>
 
                 {/* 9th Row - Footer */}
@@ -384,18 +412,24 @@ const CardComponent = ({ image, title, description }) => {
             boxShadow="md"
             rounded="lg"
             overflow="hidden"
-            p={5}
+            p={[4, 6, 8]} // Responsive padding for the entire card
             transition="all 0.2s"
-
             _hover={{ transform: 'scale(1.05)' }}
 
         >
             <Flex direction="column" align="center" justify="center" textAlign="center">
-                <Image src={image} alt="Card Image" style={{ width: '250px', height: '250px' }} />
-                <Heading size="md" mt={2}>
+                <Image
+                    src={image}
+                    alt="Card Image"
+                    style={{ width: '100%', height: 'auto', maxWidth: '250px' }}
+                    mb={[4, 6]} // Adding responsive margin-bottom to the image
+                />
+                <Heading size="lg" mt={2} px={[4, 6, 8]}> {/* Responsive horizontal padding */}
                     {title}
                 </Heading>
-                <Link mt={2} to={'#'} >{description}</Link>
+                <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px', '15px', '15px', '18px']}> {/* Responsive padding for description */}
+                    {description}
+                </Text>
             </Flex>
         </Box>
     );

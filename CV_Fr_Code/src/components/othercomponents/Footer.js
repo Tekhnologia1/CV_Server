@@ -14,6 +14,7 @@ import {
 import { FaInstagram, FaLinkedin, FaFacebook, FaEnvelope } from 'react-icons/fa'
 import { BiPhoneCall } from 'react-icons/bi'
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
+import { Link } from 'react-router-dom';
 
 
 
@@ -41,19 +42,25 @@ const SocialButton = ({ children, label, href }) => {
 }
 
 export default function Footer() {
+  const bold_font_weight = '700';
+  const bold_font_size = ['20px', '20px', '22px']
+  const footer_group_mb = '0'
+  const font_family = 'Poppins, sans-serif'
   return (
     <Box
       bg={useColorModeValue('#E5E5E5')}
-      color={useColorModeValue('gray.700', 'gray.200')}>
-      <Container as={Stack} maxW={'6xl'} py={10}>
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8}>
+      color={useColorModeValue('gray.700', 'gray.200')}
+      
+      >
+      <Container as={Stack} maxW={'6xl'} py={10} fontFamily={font_family}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={[20]}>
 
           {/* Call Our Helpline Section */}
-          <Stack spacing={4}>
-            <Text fontWeight={'bold'} fontSize={'lg'}>
+          <Stack>
+            <Text fontWeight={bold_font_weight} fontSize={bold_font_size} textAlign={'start'} mb={footer_group_mb}>
               Call Our Helpline
             </Text>
-            <Text>Got career-related questions? Talk to our experts!</Text>
+            <Text textAlign={'start'}>Got career-related questions? Talk to our experts!</Text>
             <Stack direction={'row'} align={'center'}>
               <IconButton
                 as={'a'}
@@ -68,11 +75,11 @@ export default function Footer() {
           </Stack>
 
           {/* Subscribe to Newsletter Section */}
-          <Stack spacing={4} >
-            <Text fontWeight={'bold'} fontSize={'lg'}>
+          <Stack >
+            <Text fontWeight={bold_font_weight} fontSize={bold_font_size} textAlign={'start'} mb={footer_group_mb}>
               Subscribe to our Newsletter
             </Text>
-            <Text>
+            <Text textAlign={'start'}>
               Expert-written articles and everything else you need to choose the right career, delivered weekly to your inbox.
             </Text>
             <Stack direction={'row'}>
@@ -97,11 +104,11 @@ export default function Footer() {
           </Stack>
 
           {/* Stay Connected Section */}
-          <Stack spacing={4} align={'center'}>
-            <Text fontWeight={'bold'} fontSize={'lg'}>
+          <Stack>
+            <Text fontWeight={bold_font_weight} fontSize={bold_font_size} textAlign={'start'} mb={footer_group_mb}>
               Stay Connected
             </Text>
-            <Text>Stay updated with all things career - trends, inspiration, and more.</Text>
+            <Text textAlign={'start'}>Stay updated with all things career - trends, inspiration, and more.</Text>
             <Stack direction={'row'} spacing={4} align={'center'}>
               <SocialButton label={'YouTube'} href={'#'}>
                 <FaEnvelope />
@@ -126,30 +133,30 @@ export default function Footer() {
           borderStyle={'solid'}
           borderColor={useColorModeValue('gray.200', 'gray.700')}
           pt={5}
-          style={{paddingBottom:'var(--chakra-space-0)'}}>
+          style={{ paddingBottom: 'var(--chakra-space-0)' }}>
           <Container as={Stack} maxW={'6xl'} spacing={4}>
             {/* SimpleGrid for 3 columns */}
-            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={8} justifyContent="center" alignItems="top">
+            <SimpleGrid columns={{ base: 1, md: 3 }} spacing={20} justifyContent="center" alignItems="top" fontSize={bold_font_size}>
               {/* Logo */}
               <Box display={'flex'} justifyContent={'start'}>
                 <Image src={cv_brand_logo} alt="Career Vidyalaya Logo" width={'200px'} height={'200px'} />
               </Box>
 
               {/* 1st Stack */}
-              <Stack direction={'column'} align={'start'}>
-                <Text href={'/'}>Home</Text>
-                <Text>Services</Text>
-                <Text>Counsellors</Text>
-                <Text>Community</Text>
-                <Text>Test Demo</Text>
+              <Stack direction={'column'} align={'start'} fontWeight={bold_font_weight} gap={'0'}>
+                <Link to={'/'}><Text mb={footer_group_mb}>Home</Text></Link>
+                <Link to={'/services'}><Text mb={footer_group_mb}>Services</Text></Link>
+                <Text mb={footer_group_mb}>Counsellors</Text>
+                <Text mb={footer_group_mb}>Community</Text>
+                <Text mb={footer_group_mb}>Test Demo</Text>
               </Stack>
 
               {/* 2nd Stack */}
-              <Stack direction={'column'} align={'start'}>
-                <Text>Contact Us</Text>
-                <Text>Terms and Conditions</Text>
-                <Text>Privacy Policy</Text>
-                <Text>Disclaimer</Text>
+              <Stack direction={'column'} align={'start'} fontWeight={bold_font_weight} gap={'0'}>
+                <Text mb={footer_group_mb}>Contact Us</Text>
+                <Text mb={footer_group_mb}>Terms and Conditions</Text>
+                <Text mb={footer_group_mb}>Privacy Policy</Text>
+                <Text mb={footer_group_mb}>Disclaimer</Text>
               </Stack>
             </SimpleGrid>
 

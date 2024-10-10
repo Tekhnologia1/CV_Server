@@ -43,7 +43,7 @@ export default function WithSubnavigation() {
   const openSignUpModal = () => setIsSignUpOpen(true);
   const closeSignUpModal = () => {
     setIsSignUpOpen(false);
-    refreshPage();
+    // refreshPage();
   }
   const refreshPage = () => {
     window.location.reload();
@@ -133,14 +133,14 @@ export default function WithSubnavigation() {
       <SignInModal
         isOpen={isSignInOpen}
         onClose={closeSignInModal}
-        isCentered
+        
       />
 
       {/* Sign Up Modal */}
       <SignUpModal
         isOpen={isSignUpOpen}
         onClose={closeSignUpModal}
-        isCentered
+        
       />
     </Box>
   );
@@ -315,7 +315,7 @@ const NAV_ITEMS = [
   },
   {
     label: 'Services',
-    href: '#',
+    href: '/services',
   },
   {
     label: 'Councellor',

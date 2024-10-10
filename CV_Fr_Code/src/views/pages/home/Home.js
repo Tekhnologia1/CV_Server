@@ -27,6 +27,13 @@ import banner_image1 from "src/assets/images/Home/banner_image1.png";
 const Home = () => {
     const cardBg = useColorModeValue('white', 'gray.700');
     const tilecolor_purple = "#4d3acc";
+    const title_size = ["2xl", "3xl", "4xl", "5xl"]
+    const demo_title_size = ["2xl", "3xl", "4xl", "5xl"]
+    const faq_title_size = ["xl", "2xl", "3xl", "4xl"]
+    const subtitle_size = ["xl", "xl", "2xl", "3xl"]
+    const font_family = 'Poppins, sans-serif'
+
+    // const title_weight = ""
     const lightGreenBg = "#e0f7e7";
     const testi_bg_color = "#f9f9f9";
     // Data for the 5 cards (images, titles, descriptions)
@@ -175,17 +182,17 @@ const Home = () => {
 
                 {/* 2nd Row - Title and 5 Cards */}
                 <Box mb={10} px={[4, 8, 12, 20]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         A gateway for your Bright future
                     </Heading>
                     <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
-                        <Text>Here's how</Text>
+                        <Text fontSize={subtitle_size} fontWeight="500">Here's how</Text>
                     </Box>
                     <Grid
                         templateColumns={['1fr', 'repeat(3, 1fr)']}
                         gap={12}
                         justifyContent="center"
-                        mb={5}
+                        mb={10}
                     >
                         {cardData1.slice(0, 3).map((card, i) => (
                             <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
@@ -204,27 +211,27 @@ const Home = () => {
                 </Box>
 
                 {/* 3rd Row - Title and 3 Cards */}
-                <Box mb={10} px={[4, 8, 12, 16]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box mb={10} px={['30px','30px','30px','100px','200px']}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Our Online Offerings
                     </Heading>
                     <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
-                        <Text>Shaping your Career</Text>
+                        <Text fontSize={subtitle_size} fontWeight="500">Shaping your Career</Text>
                     </Box>
                     <SimpleGrid columns={[1, 3]} spacing={8}>
                         {cardData2.slice(0, 3).map((card, i) => (
-                            <CardComponent key={i} image={card.image} title={card.title} description={card.description}/>
+                            <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
                         ))}
                     </SimpleGrid>
                 </Box>
 
                 {/* 4th Row - Title and 3 Cards + Button with light green background */}
-                <Box bg={lightGreenBg} p={5} px={[4, 8, 12, 20]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box bg={lightGreenBg} p={5} px={['30px','30px','30px','100px','200px']}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Our Plans
                     </Heading>
                     <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
-                        <Text>Get Admission in suitable college, scale the Career to Global Level, and build a sustainable future</Text>
+                        <Text fontSize={subtitle_size} fontWeight="500" textAlign={'center'}>Get Admission in suitable college, scale the Career to Global Level,<br /> and build a sustainable future</Text>
                     </Box>
                     <SimpleGrid columns={[1, 3]} spacing={12}>
                         {cardData3.slice(0, 3).map((card, i) => (
@@ -234,18 +241,30 @@ const Home = () => {
                 </Box>
 
                 {/* 5th Row - Title and Button Horizontally Centered */}
-                <Flex direction="column" align="center" justify="center" mb={10} bgImage={bg_mask} py={[8, 12]}>
+                {/* <Flex direction="column" align="center" justify="center" mb={10} bgImage={bg_mask} py={[8, 12]}>
                     <Heading color="#ffffff" textAlign="center">
                         Start your journey with Career Vidyalaya!
                     </Heading>
                     <Button mt={5} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={10}>
                         Take a Demo
                     </Button>
+                </Flex> */}
+
+                <Flex direction="column" align="center" justify="center" mb={10} bgImage={bg_mask} py={[8, 12]} px={[6, 10, 20]}>
+                    <Grid templateColumns={['1fr', '2fr 2fr']} gap={[10, 20, 40]} alignItems="center" justifyContent="center" >
+                        <Heading color="#ffffff" textAlign="center" fontSize={demo_title_size} >
+                            Start your journey with<br /> Career Vidyalaya!
+                        </Heading>
+                        <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
+                            Take a Demo
+                        </Button>
+                    </Grid>
                 </Flex>
+
 
                 {/* 6th Row - Card Slider */}
                 <Box bg={testi_bg_color} pb={10} px={[2, 5]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Success Stories
                     </Heading>
                     <Slider {...settings}>
@@ -261,15 +280,15 @@ const Home = () => {
                 </Box>
 
                 {/* 8th Row - Title and Accordion */}
-                <Box mb={10} mx={[4, 8, 12]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple}>
+                <Box mb={10} mx={[4, 8, 12]} px={['20px', '50px', '100px', '100px', '100px', '300px']}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={faq_title_size}>
                         FAQs: What people usually ask us?
                     </Heading>
                     <Accordion allowToggle>
                         {accordian.map((accord, i) => (
                             <AccordionItem key={i}>
                                 <AccordionButton>
-                                    <Box flex="1" textAlign="left">
+                                    <Box flex="1" textAlign="left" textColor={tilecolor_purple} fontSize={['md', 'md', 'lg']} fontWeight={'500'} fontFamily={font_family}>
                                         {accord.title}
                                     </Box>
                                     <AccordionIcon />
@@ -280,9 +299,11 @@ const Home = () => {
                             </AccordionItem>
                         ))}
                     </Accordion>
-                    <Button variant="link" mt={3} color={tilecolor_purple}>
-                        Show More
-                    </Button>
+                    <Box display="flex" justifyContent="flex-end" mt={3}>
+                        <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'}>
+                            Show More FAQs
+                        </Button>
+                    </Box>
                 </Box>
 
                 {/* 9th Row - Footer */}
@@ -306,16 +327,16 @@ const CardComponent = ({ image, title, description }) => (
         _hover={{ transform: 'scale(1.05)' }}
     >
         <Flex direction="column" align="center" justify="center" textAlign="center">
-            <Image 
-                src={image} 
-                alt="Card Image" 
-                style={{ width: '100%', height: 'auto', maxWidth: '250px' }} 
+            <Image
+                src={image}
+                alt="Card Image"
+                style={{ width: '100%', height: 'auto', maxWidth: '250px' }}
                 mb={[4, 6]} // Adding responsive margin-bottom to the image
             />
-            <Heading size="md" mt={2} px={[4, 6, 8]}> {/* Responsive horizontal padding */}
+            <Heading size="lg" mt={2} px={[4, 6, 8]}> {/* Responsive horizontal padding */}
                 {title}
             </Heading>
-            <Text mt={2} px={[4, 6, 8]}> {/* Responsive padding for description */}
+            <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px','15px', '15px','18px']}> {/* Responsive padding for description */}
                 {description}
             </Text>
         </Flex>
@@ -356,28 +377,28 @@ const SlicerCardComponent = ({ image, testi_name, description }) => (
 
 // CardWithButton Component
 const CardWithButtonComponent = ({ image, title, description }) => (
-    <Box 
-        bg="white" 
-        boxShadow="md" 
-        rounded="lg" 
-        overflow="hidden" 
-        
-        py={5} 
+    <Box
+        bg="white"
+        boxShadow="md"
+        rounded="lg"
+        overflow="hidden"
+
+        py={5}
         textAlign="center" // Center align the text and button
     >
-        <Flex 
-            direction="column" 
+        <Flex
+            direction="column"
             align="center" // Align items to center
             justify="center"
         >
             {/* Responsive image */}
-            <Image 
-                src={image} 
-                alt="Card Image" 
+            <Image
+                src={image}
+                alt="Card Image"
                 style={{ width: '10%', maxWidth: '150px', height: 'auto' }} // Set width and height to be responsive
                 mb={4} // Add margin below the image
             />
-            
+
             <Heading size="md" mt={2}>
                 {title}
             </Heading>
