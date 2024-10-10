@@ -75,7 +75,7 @@ const SignUpModal = ({ isOpen, onClose }) => {
   return (
 
 
-    <Modal isOpen={isOpen} onClose={() => { onClose(); setCurrentModal('roleSelection'); }} isCentered>
+    <Modal isOpen={isOpen} onClose={() => { onClose(); setCurrentModal('roleSelection'); setCurrentScreen('roleSelection'); }} isCentered>
       <ModalOverlay />
       <ModalContent p={{ base: 4, md: 6 }} py={['20px', '0px']} borderRadius="15px" maxWidth="500px" bg={
         currentModal === 'studentForm' ? '#FFAD5B' :
