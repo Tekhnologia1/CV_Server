@@ -1,12 +1,18 @@
-import React from 'react';
-import { Box, Heading, Text, SimpleGrid, Grid, Flex, Image, Button, UnorderedList, ListItem, Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, useColorModeValue, Stack } from '@chakra-ui/react';
+import React, { useContext, useEffect, useState } from 'react';
+import {
+    Box, Heading, Text, SimpleGrid, Grid, Flex, Image, Button,
+    UnorderedList, ListItem, Accordion, AccordionItem, Stack,
+    AccordionButton, AccordionPanel, AccordionIcon, useColorModeValue
+} from '@chakra-ui/react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from 'src/components/othercomponents/Footer.js';
-import WithSubnavigation from 'src/components/othercomponents/Navbar';
+import Navbar from 'src/components/othercomponents/Navbar/Navbar';
+import Navbar_with_login from 'src/components/othercomponents/Navbar/Navbar_with_login';
+
 import gateway_image1 from "src/assets/images/Home/gateway_image1.png";
 import gateway_image2 from "src/assets/images/Home/gateway_image2.png";
 import gateway_image3 from "src/assets/images/Home/gateway_image3.png";
@@ -23,8 +29,30 @@ import Crown from "src/assets/images/Home/Crown.png";
 import bg_mask from "src/assets/images/Home/bg_mask.png";
 import Testimonial_image from "src/assets/images/Home/Testimonial_image.png";
 import banner_image1 from "src/assets/images/Home/banner_image1.png";
+import VideoGrid from "src/views/pages/home/VideoGrid";
+import { UserContext } from 'src/context/UserContextProvider';
+
 
 const Home = () => {
+
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [role, setRole] = useState('');
+
+
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setRole(user.role);
+            console.log(role);
+        }, 1000); // 3 seconds delay
+
+    }, [user])
+
+
+
+
     const cardBg = useColorModeValue('white', 'gray.700');
     const tilecolor_purple = "#4d3acc";
     const title_size = ["2xl", "3xl", "4xl", "5xl"]
@@ -37,6 +65,10 @@ const Home = () => {
     const lightGreenBg = "#e0f7e7";
     const testi_bg_color = "#f9f9f9";
     // Data for the 5 cards (images, titles, descriptions)
+
+    //--------------
+
+
     const cardData1 = [
         {
             image: gateway_image1,
@@ -166,52 +198,61 @@ const Home = () => {
     return (
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
             <Box style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                <WithSubnavigation />
+                {!(role === 'Student' || role === 'Parent' || role === 'Counsellor' || role === 'B2B') ?
+                    <Navbar /> :
+                    <Navbar_with_login />
+                }
             </Box>
 
             <Box className="body flex-grow-1" pt={[5, 10]}>
                 {/* 1st Row - Two Images */}
-                <SimpleGrid columns={[1, 2]} spacing={10} mb={12}>
+                <VideoGrid />
+                {/* <SimpleGrid columns={[1, 2]} spacing={10} mb={12}>
                     <Box display="flex" justifyContent="center" alignItems="center">
                         <Image src={top_image1} alt="Image 1" style={{ width: '100%', maxWidth: '700px', height: 'auto' }} />
                     </Box>
                     <Box display="flex" justifyContent="center" alignItems="center">
                         <Image src={top_image2} alt="Image 2" style={{ width: '100%', maxWidth: '700px', height: 'auto' }} />
                     </Box>
-                </SimpleGrid>
+                </SimpleGrid> */}
 
                 {/* 2nd Row - Title and 5 Cards */}
-                <Box mb={10} px={[4, 8, 12, 20]}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
-                        A gateway for your Bright future
-                    </Heading>
-                    <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
-                        <Text fontSize={subtitle_size} fontWeight="500">Here's how</Text>
+                {!(role === 'Student' || role === 'Parent' || role === 'Counsellor' || role === 'B2B') && (
+
+                    <Box mb={10} px={[4, 8, 12, 20]}>
+                        <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
+                            A gateway for your Bright future
+                        </Heading>
+                        <Box display="flex" justifyContent="center" alignItems="center" mb={5}>
+                            <Text fontSize={subtitle_size} fontWeight="500">Here's how</Text>
+                        </Box>
+                        <Grid
+                            templateColumns={['1fr', 'repeat(3, 1fr)']}
+                            gap={12}
+                            justifyContent="center"
+                            mb={10}
+                        >
+                            {cardData1.slice(0, 3).map((card, i) => (
+                                <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
+                            ))}
+                        </Grid>
+                        <Grid
+                            templateColumns={['1fr', 'repeat(2, 1fr)']}
+                            gap={12}
+                            justifyContent="center"
+                            px={[4, 6, 8]}
+                        >
+                            {cardData1.slice(3).map((card, i) => (
+                                <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
+                            ))}
+                        </Grid>
                     </Box>
-                    <Grid
-                        templateColumns={['1fr', 'repeat(3, 1fr)']}
-                        gap={12}
-                        justifyContent="center"
-                        mb={10}
-                    >
-                        {cardData1.slice(0, 3).map((card, i) => (
-                            <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
-                        ))}
-                    </Grid>
-                    <Grid
-                        templateColumns={['1fr', 'repeat(2, 1fr)']}
-                        gap={12}
-                        justifyContent="center"
-                        px={[4, 6, 8]}
-                    >
-                        {cardData1.slice(3).map((card, i) => (
-                            <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
-                        ))}
-                    </Grid>
-                </Box>
+
+                )}
+
 
                 {/* 3rd Row - Title and 3 Cards */}
-                <Box mb={10} px={['30px','30px','30px','100px','200px']}>
+                <Box mb={10} px={['30px', '30px', '30px', '100px', '200px']}>
                     <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Our Online Offerings
                     </Heading>
@@ -226,7 +267,7 @@ const Home = () => {
                 </Box>
 
                 {/* 4th Row - Title and 3 Cards + Button with light green background */}
-                <Box bg={lightGreenBg} p={5} px={['30px','30px','30px','100px','200px']}>
+                <Box bg={lightGreenBg} p={5} px={['30px', '30px', '30px', '100px', '200px']}>
                     <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Our Plans
                     </Heading>
@@ -336,7 +377,7 @@ const CardComponent = ({ image, title, description }) => (
             <Heading size="lg" mt={2} px={[4, 6, 8]}> {/* Responsive horizontal padding */}
                 {title}
             </Heading>
-            <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px','15px', '15px','18px']}> {/* Responsive padding for description */}
+            <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px', '15px', '15px', '18px']}> {/* Responsive padding for description */}
                 {description}
             </Text>
         </Flex>

@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const http = axios.create({
   // baseURL: 'http://192.168.1.1:3005',
-  baseURL: 'http://192.168.1.69:3002',
+  // baseURL: 'http://192.168.1.69:3002',
 });
 
 class Auth {
@@ -33,6 +33,8 @@ class Auth {
 
   static logout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+
     // localStorage.removeItem('userRole');
   }
 

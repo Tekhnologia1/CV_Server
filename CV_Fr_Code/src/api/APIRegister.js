@@ -23,7 +23,7 @@ const APIRegister = () => {
   // User_Login
   const LOGIN = async (data) => {
     try {
-      const response = await axios.post(`${api_url}/api/users/login`, data);
+      const response = await axios.post(`${api_url}/login`, data);
       return response.data;
     } catch (error) {
       console.log('Invalid credentials:', error);

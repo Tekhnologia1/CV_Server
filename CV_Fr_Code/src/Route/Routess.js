@@ -19,20 +19,35 @@ const Routess = () => {
   const AdminLayout = React.lazy(() => import('../layout/AdminLayout'))
 
 
-  
 
-  
+
+
 
   //--------------------------Home Pages----------------------------------------------//
   const Home = React.lazy(() => import('../views/pages/home/Home'))
-  const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
+  // const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
 
-  const HomeHeader = React.lazy(() => import('../views/pages/home/HomeHeaderwithlogin'))
+  // const HomeHeader = React.lazy(() => import('../views/pages/home/HomeHeaderwithlogin'))
 
 
   const Services = React.lazy(() => import('../views/pages/home/Services'))
 
+  //----------------Student ---------------------------------//
+  const Student_Home = React.lazy(() => import('../views/Student/Student_Home'))
+  // const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
 
+
+  const Student_Dashboard = React.lazy(() => import('../views/Student/Student_Dashboard'))
+
+  const My_Profile = React.lazy(() => import('../views/pages/home/My_Profile'))
+
+  // //----------------Parent ---------------------------------//
+  // const Parent_Home = React.lazy(() => import('../views/Parent/Parent_Home'))
+  // // const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
+
+  // const Student_Services = React.lazy(() => import('../views/Student/Student_Services'))
+
+  const Parent_Dashboard = React.lazy(() => import('../views/Parent/Parent_Dashboard'))
 
 
 
@@ -43,7 +58,7 @@ const Routess = () => {
 
 
 
- 
+
 
   //--------------------------Login and Register Pages----------------------------------------------//
   // const Login = React.lazy(() => import('../views/pages/SignIn/'))
@@ -70,9 +85,23 @@ const Routess = () => {
 
           <Route path="/services" name="Services" element={<Services />} />
 
-          <Route path="/ContactUs" name="Contact" element={<HomeContact />} />
-          
 
+          {/* ----------------Student--------------------------------- */}
+
+          <Route path="/student_home" name="Student_Home" element={<Student_Home />} />
+
+
+          <Route path="/student_dashboard" name="Student_Dashboard" element={<Student_Dashboard />} />
+
+          <Route path="/my_profile" name="My_Profile" element={<My_Profile />} />
+
+          {/* ----------------Parent--------------------------------- */}
+
+          {/* <Route path="/parent_home" name="Parent_Home" element={<Parent_Home />} /> */}
+
+          {/* <Route path="/parent_services" name="Parent_Services" element={<Parent_Services />} /> */}
+
+          <Route path="/parent_dashboard" name="Parent_Dashboard" element={<Parent_Dashboard />} /> 
 
           {/* --------Login Pages--------- */}
 
@@ -93,7 +122,7 @@ const Routess = () => {
           {/* ----------------Admin Dashboard--------------------------------- */}
 
           <Route path="/super_admin_dash" name="AdminDashboard" element={<AdminLayout />} />
-          
+
 
 
 
@@ -101,9 +130,9 @@ const Routess = () => {
 
           {/* -------------Firm_User Pages----------------------------------------------------------------------------------------------------------- */}
           <Route path="/firm_user_dash" name="Firm_User_Dash" element={< FirmUsrDash />} />
-          
 
-          
+
+
 
 
 

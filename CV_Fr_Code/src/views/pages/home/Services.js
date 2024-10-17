@@ -20,9 +20,10 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-import WithSubnavigation from 'src/components/othercomponents/Navbar'
+import Navbar from 'src/components/othercomponents/Navbar/Navbar'
+import Navbar_with_login from 'src/components/othercomponents/Navbar/Navbar_with_login'
 import Footer from 'src/components/othercomponents/Footer'
 
 import gateway_image1 from "src/assets/images/Home/gateway_image1.png";
@@ -30,7 +31,7 @@ import gateway_image2 from "src/assets/images/Home/gateway_image2.png";
 import gateway_image3 from "src/assets/images/Home/gateway_image3.png";
 import gateway_image4 from "src/assets/images/Home/gateway_image4.png";
 import gateway_image5 from "src/assets/images/Home/gateway_image5.png";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import top_image1 from "src/assets/images/Home/top_image1.png";
 import top_image2 from "src/assets/images/Home/top_image2.png";
 import card_3_image1 from "src/assets/images/Home/3_card_image1.png";
@@ -53,9 +54,18 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { Col, Row } from 'react-bootstrap';
 import { CButton } from '@coreui/react';
+import { UserContext } from 'src/context/UserContextProvider';
 
 
 const Services = () => {
+    const { user } = useContext(UserContext);
+    const navigate = useNavigate();
+    const [role, setRole] = useState('');
+    useEffect(() => {
+        setRole(user.role);
+        console.log(role);
+    }, [user])
+
     const cardBg = useColorModeValue('white', 'gray.700');
     const lightGreenBg = '#d9ffd2';
     const tilecolor_purple = '#4d3acc';
@@ -218,7 +228,10 @@ const Services = () => {
     return (
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
             <Box style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-                <WithSubnavigation />
+                {!(role === 'Student' || role === 'Parent' || role === 'Counsellor' || role === 'B2B') ?
+                    <Navbar /> :
+                    <Navbar_with_login />
+                }
             </Box>
 
             <Box className="body flex-grow-1" pt={[0]}>
@@ -355,7 +368,7 @@ const Services = () => {
                 </Box>
 
                 {/* 7th Row - Card Slider */}
-                <Box bg={testi_bg_color} pb={10} px={[2, 5]}>
+                <Box mb={10} bg={testi_bg_color} pb={10} px={[2, 5]}>
                     <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
                         Success Stories
                     </Heading>

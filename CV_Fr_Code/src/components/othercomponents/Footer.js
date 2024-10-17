@@ -50,8 +50,8 @@ export default function Footer() {
     <Box
       bg={useColorModeValue('#E5E5E5')}
       color={useColorModeValue('gray.700', 'gray.200')}
-      
-      >
+
+    >
       <Container as={Stack} maxW={'6xl'} py={10} fontFamily={font_family}>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={[20]}>
 
@@ -139,7 +139,9 @@ export default function Footer() {
             <SimpleGrid columns={{ base: 1, md: 3 }} spacing={20} justifyContent="center" alignItems="top" fontSize={bold_font_size}>
               {/* Logo */}
               <Box display={'flex'} justifyContent={'start'}>
-                <Image src={cv_brand_logo} alt="Career Vidyalaya Logo" width={'200px'} height={'200px'} />
+                <Link to={'/'}>
+                  <Image src={cv_brand_logo} alt="Career Vidyalaya Logo" width={'200px'} height={'200px'} />
+                </Link>
               </Box>
 
               {/* 1st Stack */}
