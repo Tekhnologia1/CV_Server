@@ -20,16 +20,19 @@ const CreateUser = async (req, res) => {
         experience,
         jobTime,
         consultingPref,
-        IdProof,
-        photo,
-        sscMarkSheet,
-        hscMarkSheet,
-        ugCertificate,
-        pgCertificate,
-        phdCertificate,
-        resume,
+        
         password
     } = req.body;
+
+     // Extract file paths from req.files
+     const IdProof = req.files['IdProof'] ? req.files['IdProof'][0].path :null;
+     const photo = req.files['photo'] ? req.files['photo'][0].path : null;
+     const sscMarkSheet = req.files['sscMarkSheet'] ? req.files['sscMarkSheet'][0].path : null;
+     const hscMarkSheet = req.files['hscMarkSheet'] ? req.files['hscMarkSheet'][0].path : null;
+     const ugCertificate = req.files['ugCertificate'] ? req.files['ugCertificate'][0].path : null;
+     const pgCertificate = req.files['pgCertificate'] ? req.files['pgCertificate'][0].path : null;
+     const phdCertificate = req.files['phdCertificate'] ? req.files['phdCertificate'][0].path : null;
+     const resume = req.files['resume'] ? req.files['resume'][0].path : null;
 
     try {
         const hashedPassword = bcrypt.hashSync(password, 8);
@@ -62,6 +65,11 @@ const CreateUser = async (req, res) => {
         return res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
         console.error('Error creating user:', error);
+        
+          // Check for specific error message for duplicate email
+          if (error.sqlState === '45000') { // Adjust based on your database's actual error handling
+            return res.status(400).json({ message: 'This email already exists.' });
+        }
         return res.status(500).json({ message: 'Internal Server Error' });
     }
 };
@@ -117,7 +125,7 @@ const deleteUserById = async (req, res) => {
 };
 
 const updateUserById = async (req, res) => {
-    const { id } = req.params; // Get the user ID from the request parameters
+    const userId = parseInt(req.params.id, 10); // Get the user ID from request parameters
     const {
         role_id,
         firstName,
@@ -141,14 +149,25 @@ const updateUserById = async (req, res) => {
         pgCertificate,
         phdCertificate,
         resume,
-        password,
-        updated_by
-    } = req.body; // Get the updated user data from the request body
+        password, // Consider hashing this if necessary
+        updated_by // Capture who is updating
+    } = req.body;
+
+    // Validate input
+    if (isNaN(userId)) {
+        return res.status(400).json({ message: 'Invalid user ID.' });
+    }
+    if (!firstName || !lastName || !email) {
+        return res.status(400).json({ message: 'First name, last name, and email are required.' });
+    }
 
     try {
+        // Hash the password if it's provided
         const hashedPassword = password ? bcrypt.hashSync(password, 8) : undefined;
-        const result = await sql.query('CALL UpdateUserById(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            id,
+
+        // Call the stored procedure to update the user
+        await sql.query('CALL UpdateUserById(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            userId,
             role_id,
             firstName,
             lastName,
@@ -171,26 +190,23 @@ const updateUserById = async (req, res) => {
             pgCertificate,
             phdCertificate,
             resume,
-            password,
+            hashedPassword || password, // Use hashed password if provided
             updated_by
         ]);
 
-        // Check if the update was successful (you might need to adjust this based on your stored procedure behavior)
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'User not found or no changes made' });
-        }
-
-        return res.status(200).json({ message: 'User updated successfully' });
+        return res.status(200).json({ message: 'User updated successfully.' });
     } catch (error) {
         console.error('Error updating user:', error);
-        return res.status(500).json({ message: 'Internal Server Error' });
+        if (error.code === '45000') { // Check for custom SQL error codes
+            return res.status(404).json({ message: error.message });
+        }
+        return res.status(500).json({ message: 'Internal Server Error', error: error.message });
     }
 };
 
 // Login API
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
-
     try {
         // Call the stored procedure to get the user by email
         const result = await sql.query('CALL LoginUser(?)', [email]);
@@ -199,8 +215,6 @@ const loginUser = async (req, res) => {
         // console.log(user); // Log user object for debugging
         // console.log(user[0].user_id);
         // console.log(user[0].role_id);
-
-
         // Check if user exists
         if (!user) {
             return res.status(401).json({ message: 'Invalid email or password' });

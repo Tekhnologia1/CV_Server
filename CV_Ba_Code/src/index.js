@@ -3,8 +3,6 @@ const express = require('express');
 const cors = require("cors");
 const sql = require('./config/database');
 const Router = require('./routes/routing');
-const multer  = require('multer')
-// const upload = multer({ dest: 'uploads/' })
 
 const app = express();
 app.use(cors()); // Call cors as a function
@@ -20,7 +18,7 @@ app.use('/', Router);
 
 // Simple route
 app.get("/", (req, res) => {
-    res.json( "Welcome to Ak Backend application." );
+    res.json( "Welcome to Career Vidyalaya." );
 });
 
 // Start the server
