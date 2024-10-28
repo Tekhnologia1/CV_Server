@@ -769,35 +769,35 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
               {/* File Upload Fields */}
               <FormControl>
                 <FormLabel>ID Proof</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>Photo</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>10th Marksheet</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>12th Marksheet</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>UG Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>PG Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>PhD Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
               <FormControl>
                 <FormLabel>Resume</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} />
+                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
               </FormControl>
 
               <Button colorScheme="red" width="100%" onClick={() => { handleCurrScreen('getOTP'); sendOTP(); }}>
