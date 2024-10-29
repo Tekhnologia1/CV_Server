@@ -71,11 +71,11 @@ const Testing_Tools = () => {
 
         },
         // {
-        //     title: 'Student’s cell',
+        //     title: 'Career Expedition',
         //     description: 'Know more',
         // },
         // {
-        //     title: 'Live connect',
+        //     title: 'Career Talk',
         //     description: 'Know more',
         // },
     ];

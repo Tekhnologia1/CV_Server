@@ -84,18 +84,18 @@ const Parent_Dashboard = () => {
     const cardData2 = [
         {
             image: card_3_image1,
-            title: 'Live Video Consulting',
+            title: 'Career Connect',
             description: 'Know more',
 
         },
         {
             image: card_3_image2,
-            title: 'Student’s cell',
+            title: 'Career Expedition',
             description: 'Know more',
         },
         {
             image: card_3_image3,
-            title: 'Live connect',
+            title: 'Career Talk',
             description: 'Know more',
         },
     ];
@@ -108,11 +108,11 @@ const Parent_Dashboard = () => {
 
         },
         // {
-        //     title: 'Student’s cell',
+        //     title: 'Career Expedition',
         //     description: 'Know more',
         // },
         // {
-        //     title: 'Live connect',
+        //     title: 'Career Talk',
         //     description: 'Know more',
         // },
     ];

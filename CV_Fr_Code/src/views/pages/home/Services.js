@@ -117,7 +117,7 @@ const Services = () => {
     const cardData2 = [
         {
             image: card_3_image1,
-            title: 'Live Video Consulting',
+            title: 'Career Connect',
             description: 'Know more',
 
         },
@@ -128,7 +128,7 @@ const Services = () => {
         },
         {
             image: card_3_image3,
-            title: 'Live connect',
+            title: 'Career Talk',
             description: 'Know more',
         },
     ];
@@ -141,11 +141,11 @@ const Services = () => {
 
         },
         // {
-        //     title: 'Student’s cell',
+        //     title: 'Career Expedition',
         //     description: 'Know more',
         // },
         // {
-        //     title: 'Live connect',
+        //     title: 'Career Talk',
         //     description: 'Know more',
         // },
     ];

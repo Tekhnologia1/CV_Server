@@ -70,7 +70,7 @@ export default function Footer() {
                 aria-label="Phone"
                 icon={<BiPhoneCall />}
               />
-              <Text fontWeight={'bold'}>+91 89398 77998</Text>
+              <Text fontWeight={'bold'}>+91 8983055973</Text>
             </Stack>
           </Stack>
 
