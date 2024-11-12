@@ -17,7 +17,6 @@ import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
 import { Link } from 'react-router-dom';
 
 
-
 const SocialButton = ({ children, label, href }) => {
   return (
     <chakra.button
@@ -46,6 +45,10 @@ export default function Footer() {
   const bold_font_size = ['20px', '20px', '22px']
   const footer_group_mb = '0'
   const font_family = 'Poppins, sans-serif'
+
+
+
+
   return (
     <Box
       bg={useColorModeValue('#E5E5E5')}

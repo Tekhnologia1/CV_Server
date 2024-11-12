@@ -34,18 +34,22 @@ const VideoGrid = () => {
     };
 
     return (
-        <SimpleGrid columns={[1, 2]} spacing={10} mb={12} bgColor={'white'} marginInline={5} boxShadow={'xl'} borderRadius={['md','md','3xl']}>
+        <SimpleGrid columns={[1, 2]} spacing={10} mb={12} bgColor={'white'} marginInline={5} boxShadow={'xl'}
+            borderRadius="none"
+        // borderRadius={['md', 'md', '3xl']}
+        >
             {videos.map((video, index) => (
                 <Box key={index} display="flex" justifyContent="center" alignItems="center">
                     <video
                         ref={(el) => (videoRefs.current[index] = el)}
                         src={video.src}
                         alt={video.alt}
-                        style={{ width: '100%', maxWidth: '700px', height: 'auto' }}
+                        style={{ width: '100%', height: 'auto' }}
                         autoPlay={index === currentVideo}
                         loop={false}
                         muted
                         onEnded={handleVideoEnded}
+
                     />
                 </Box>
             ))}

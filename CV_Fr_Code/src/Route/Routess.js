@@ -10,9 +10,11 @@ const Routess = () => {
   const [role, setRole] = useState('');
 
   useEffect(() => {
-      setRole(user.role);
+    setRole(user.role);
+    
   }, [user])
 
+  console.log(role);
   const loading = (
     <div className="pt-3 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
@@ -45,19 +47,14 @@ const Routess = () => {
   // const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
 
 
-  const Student_Dashboard = React.lazy(() => import('../views/Student/Student_Dashboard'))
+  const Student_Dashboard = React.lazy(() => import('../views/Student/Student_Dashboard/Student_Dashboard'))
   const Testing_Tools = React.lazy(() => import('../views/Student/Testing_Tools'))
   const Counselling = React.lazy(() => import('../views/Student/Counselling'))
 
   const My_Profile = React.lazy(() => import('../views/pages/home/My_Profile'))
 
   // //----------------Parent ---------------------------------//
-  // const Parent_Home = React.lazy(() => import('../views/Parent/Parent_Home'))
-  // // const HomeContact = React.lazy(() => import('../views/pages/home/HomeContact'))
 
-  // const Student_Services = React.lazy(() => import('../views/Student/Student_Services'))
-
-  const Parent_Dashboard = React.lazy(() => import('../views/Parent/Parent_Dashboard'))
 
 
 
@@ -101,7 +98,7 @@ const Routess = () => {
           <Route path="/student_home" name="Student_Home" element={<Student_Home />} />
 
 
-          <Route path={role === null ? "/" : "/dashboard"} name="Student_Dashboard" element={<Student_Dashboard />} />
+          <Route path={"/dashboard"} name="Student_Dashboard" element={<Student_Dashboard />} />
           <Route path="/testing_tools" name="Testing_Tools" element={<Testing_Tools />} />
           <Route path={role === null ? "/" : "/counselling"} name="Counselling" element={<Counselling />} />
 
@@ -111,11 +108,7 @@ const Routess = () => {
 
           {/* ----------------Parent--------------------------------- */}
 
-          {/* <Route path="/parent_home" name="Parent_Home" element={<Parent_Home />} /> */}
 
-          {/* <Route path="/parent_services" name="Parent_Services" element={<Parent_Services />} /> */}
-
-          <Route path="/parent_dashboard" name="Parent_Dashboard" element={<Parent_Dashboard />} /> 
 
           {/* --------Login Pages--------- */}
 

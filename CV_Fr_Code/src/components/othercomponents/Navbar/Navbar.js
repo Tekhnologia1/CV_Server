@@ -41,10 +41,9 @@ const Navbar = () => {
   const closeSignInModal = () => setIsSignInOpen(false);
 
   const openSignUpModal = () => setIsSignUpOpen(true);
-  const closeSignUpModal = () => {
-    setIsSignUpOpen(false);
-    // refreshPage();
-  }
+  const closeSignUpModal = () => setIsSignUpOpen(false);
+   
+  
   const refreshPage = () => {
     window.location.reload();
   };

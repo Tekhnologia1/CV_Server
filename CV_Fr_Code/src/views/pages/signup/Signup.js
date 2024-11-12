@@ -38,6 +38,7 @@ import axios from 'axios';
 
 import { Country, State, City } from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city'
+import File_Upload from 'src/components/othercomponents/FileUploadComponent';
 
 
 const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
@@ -57,6 +58,15 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   const [lastName, setLastName] = useState('');
   const [contact, setContact] = useState('');
   const [email, setEmail] = useState('');
+  //---------------------------
+  const [fnameError, setFNameError] = useState('');
+  const [lnameError, setLNameError] = useState('');
+  const [contactError, setContactError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [repasswordError, setRePasswordError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   //-------Country, State, City
   const [countryId] = useState("IN"); // Default to India
   const [states, setStates] = useState([]);
@@ -72,6 +82,8 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     ]
   );
   const [gender, setGender] = useState('');
+
+  //---------Student Sign Up Fields
   const [instituteName, setInstituteName] = useState('');
   const [studClasses] = useState(
     [
@@ -84,6 +96,61 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     ]
   );
   const [studClass, setStudClass] = useState('');
+  //-------------------------------
+
+  //---------Parent Sign Up Fields
+
+  const [occupations] = useState(
+    [
+      { 'name': 'Accountant' },
+      { 'name': 'Banker' },
+      { 'name': 'Business Manager' },
+      { 'name': 'Civil Servant' },
+      { 'name': 'Data Scientist' },
+      { 'name': 'Doctor' },
+      { 'name': 'Engineer' },
+      { 'name': 'Entrepreneur' },
+      { 'name': 'Graphic Designer' },
+      { 'name': 'Homemaker' },
+      { 'name': 'IT Specialist' },
+      { 'name': 'Journalist' },
+      { 'name': 'Lawyer' },
+      { 'name': 'Marketing Specialist' },
+      { 'name': 'Musician' },
+      { 'name': 'Nurse' },
+      { 'name': 'Pharmacist' },
+      { 'name': 'Photographer' },
+      { 'name': 'Professor' },
+      { 'name': 'Real Estate Agent' },
+      { 'name': 'Researcher' },
+      { 'name': 'Retired' },
+      { 'name': 'Sales Representative' },
+      { 'name': 'Software Developer' },
+      { 'name': 'Teacher' },
+      { 'name': 'Other' }
+    ]
+  )
+
+  const [occup, setOccup] = useState('');
+
+  const [higherstudies] = useState(
+    [
+      { 'name': "Master's Programs" },
+      { 'name': 'Doctoral Programs' },
+      { 'name': 'Diploma Programs' },
+      { 'name': 'Study Abroad' },
+      { 'name': 'Other' }
+    ]
+  )
+
+  const [highStudy, setHighStudy] = useState('');
+
+
+  const [photo, setphoto] = useState(null);
+
+
+  console.log(photo)
+  //--------------------------------
   const [educations] = useState(
     [
       { 'name': 'Graduation' },
@@ -116,18 +183,22 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   );
   const [consultingPref, setConsultingPref] = useState('');
   //Docu
-  const [IdProof, setIdProof] = useState('');
-  const [photo, setPhoto] = useState('');
-  const [sscMarkSheet, setSscMarkSheet] = useState('');
-  const [hscMarkSheet, setHscMarkSheet] = useState('');
-  const [ugCertificate, setUgCertificate] = useState('');
-  const [pgCertificate, setPgCertificate] = useState('');
-  const [phdCertificate, setPhdCertificate] = useState('');
-  const [resume, setResume] = useState('');
+  const [IdProof, setIdProof] = useState(null);
+  // const [photo, setPhoto] = useState('');
+  const [sscMarkSheet, setSscMarkSheet] = useState(null);
+  const [hscMarkSheet, setHscMarkSheet] = useState(null);
+  const [ugCertificate, setUgCertificate] = useState(null);
+  const [pgCertificate, setPgCertificate] = useState(null);
+  const [phdCertificate, setPhdCertificate] = useState(null);
+  const [resume, setResume] = useState(null);
+  //---------------------
+  const [fileError, setFileError] = useState('');
 
+  //---------------------
   const [otpArray, setOtpArray] = useState(Array(6).fill(""));
   const [otp, setOTP] = useState(''); // This will hold the final OTP number
   const [password, setPassword] = useState('');
+  const [repassword, setRePassword] = useState('');
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const [succMessage, setSuccMessage] = useState('');
@@ -156,6 +227,22 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     console.log(e.target.value);
 
   };
+
+  // const [openSignIn, setOpenSignIn] = useState(false);
+  // const [openSignUp, setOpenSignUp] = useState(false);
+
+  // const openSignInf = () => {
+  //   // onClose();
+  //   setOpenSignUp(false);
+  //   setOpenSignIn(true);
+
+  // }
+
+  // const openSignUpf = () => {
+  //   setOpenSignUp(true);
+  //   setOpenSignIn(false);
+
+  // }
 
   // Open SIgnIn Modal
   // const openSignInModal = () => {
@@ -260,8 +347,179 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     },
   ];
 
+  //---------Validations---------------------------------------------------------------
 
+  const validateFName = (e) => {
+    setFirstName(e.target.value);
+    if (firstName.length === 0) {
+      setFNameError('Name must be at least 2 characters long.');
+      return false;
+    }
+    setFNameError('');
+    const regex = /^[a-zA-Z\s]+$/;
+    if (firstName.length < 1) {
+      setFNameError('Name must be at least 2 characters long.');
+      return false;
+    } else if (regex.test(firstName)) {
+      setFNameError('');
+      return true;
+    } else {
+      setFNameError('Only letters and spaces are allowed.');
+      return false;
+    }
+  };
+
+  const validateLName = (e) => {
+    setLastName(e.target.value);
+    if (lastName.length === 0) {
+      setLNameError('Name must be at least 2 characters long.');
+      return false;
+    }
+    setLNameError('');
+    const regex = /^[a-zA-Z\s]+$/;
+    if (lastName.length < 1) {
+      setLNameError('Name must be at least 2 characters long.');
+      return false;
+    } else if (regex.test(lastName)) {
+      setLNameError('');
+      return true;
+    } else {
+      setLNameError('Only letters and spaces are allowed.');
+      return false;
+    }
+  };
+
+  const validateEmail = (e) => {
+    if ((e.target.value).length >= 0) {
+      setEmail(e.target.value);
+      setEmailError('');
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (regex.test(email)) {
+        setEmailError('');
+        return true;
+      } else {
+        setEmailError('Enter valid email address.');
+        return false;
+      }
+    } else {
+      setEmailError('Email address must not be blank.');
+      return false;
+    }
+  };
+
+  const validateContact = (e) => {
+    const contactNo = e.target.value;
+    setContact(contactNo);
+    setContactError('');
+    const regex = /^\d{10}$/;
+    if (regex.test(contactNo)) {
+      setContactError('');
+      return true;
+    } else {
+      if (contactNo.length === 0) {
+        setContactError('Contact number must not be blank.');
+      } else {
+        setContactError('Contact number must be exactly 10 digits and contain only numbers.');
+      }
+      return false;
+    }
+  };
+
+  const validatePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+    setPasswordError('');
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%`~#^&*()-_+={};:'",.<>*?&]{8,}$/;
+    if (regex.test(password)) {
+      setPasswordError('');
+      return true;
+    } else {
+      setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
+      return false;
+    }
+  };
+
+
+  //---------Validations End---------------------------------------------------------------
+
+
+  const validateAllFields = () => {
+    if (!validateFName({ target: { value: firstName } })) {
+      setFNameError('Enter valid name.');
+      return;
+    }
+
+    if (!validateLName({ target: { value: lastName } })) {
+      setLNameError('Enter valid name.');
+      return;
+    }
+
+
+    if (!validateContact({ target: { value: contact } })) {
+      setContactError('Contact number must be exactly 10 digits and contain only numbers.');
+      return;
+    }
+
+    if (!validateEmail({ target: { value: email } })) {
+      setEmailError('Invalid Email.');
+      return;
+    }
+
+    if (currentModal === 'student' && currentScreen === 'enterDetails') {
+      handleCurrScreen('getOTP');
+      sendOTP();
+    }
+
+    if (currentModal === 'parent' && currentScreen === 'enterDetails') {
+      handleCurrScreen('getOTP');
+      sendOTP();
+    }
+
+    if (currentModal === 'counsellor' && currentScreen === 'enterDetails') {
+      handleCurrScreen('uploadDocu');
+    }
+
+    if (currentModal === 'b2b' && currentScreen === 'enterDetails') {
+      handleCurrScreen('selectStream');
+    }
+
+  }
+
+  const validateAllDocu = () => {
+    if (currentModal === 'student' || currentModal === 'parent') {
+      if (photo === null) {
+        setFileError('Please upload required documents');
+        return;
+      }
+    } else if (currentModal === 'counsellor') {
+
+      if (photo === null || IdProof === null || sscMarkSheet === null || hscMarkSheet === null || ugCertificate === null || resume === null) {
+        setFileError('Please upload required documents');
+        return;
+      }
+
+    } else {
+      setFileError('Please upload required documents');
+    }
+
+    if (currentModal === 'counsellor' && currentScreen === 'uploadDocu') {
+      handleCurrScreen('getOTP');
+      sendOTP();
+    }
+  }
   const signUp = () => {
+
+    if (!validatePassword({ target: { value: password } })) {
+      setPasswordError('Password must be at least 8 characters long and contain both letters and numbers');
+      return;
+    }
+
+    if (!(password === repassword)) {
+      setRePasswordError('Password should match correctly');
+      return;
+    }
+
+
     console.log('entered signup');
 
     setIsLoading(true); // Set loading to true
@@ -574,15 +832,20 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
                 Have an account?{' '}
                 <Link color="blue.600"
                   onClick={openSignIn}
+                  // onClick={openSignInf}
                   textColor={tilecolor_purple}
                   fontWeight={'700'}
                 >
                   Sign In
                 </Link>
+
               </Text>
             </VStack>
           )}
-
+          {/* <AuthModals
+            openSignIn={openSignIn}
+            openSignUp={openSignUp}
+          /> */}
           {/* <SignInModal
               isOpen={isSignInOpen}
               onClose={closeSignInModal}
@@ -592,10 +855,14 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           {/* Conditional rendering for specific forms */}
           {currentModal === 'student' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={(e) => setFirstName(e.target.value)} />
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={(e) => setLastName(e.target.value)} />
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={(e) => setContact(e.target.value)} />
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={(e) => setEmail(e.target.value)} />
+              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              {fnameError && <div className="text-danger">{fnameError}</div>}
+              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              {lnameError && <div className="text-danger">{lnameError}</div>}
+              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              {contactError && <div className="text-danger">{contactError}</div>}
+              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              {emailError && <div className="text-danger">{emailError}</div>}
 
               <Select
                 placeholder="Select State"
@@ -640,16 +907,24 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
                   </option>
                 ))}
               </Select>
-              <Button colorScheme="red" width="100%" onClick={() => { handleCurrScreen('getOTP'); sendOTP(); }}>Get OTP</Button>
+              <File_Upload
+                onFileSelect={(file) => setphoto(file)}
+                label="Photo"
+              />
+              <Button colorScheme="red" width="100%" onClick={validateAllFields}>Get OTP</Button>
             </VStack>
           )}
 
           {currentModal === 'parent' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={(e) => setFirstName(e.target.value)} />
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={(e) => setLastName(e.target.value)} />
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={(e) => setContact(e.target.value)} />
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={(e) => setEmail(e.target.value)} />
+              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              {fnameError && <div className="text-danger">{fnameError}</div>}
+              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              {lnameError && <div className="text-danger">{lnameError}</div>}
+              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              {contactError && <div className="text-danger">{contactError}</div>}
+              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
                 size="lg"
@@ -682,16 +957,41 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
                   </option>
                 ))}
               </Select>
-              <Button colorScheme="red" width="100%" onClick={() => { handleCurrScreen('getOTP'); sendOTP(); }}>Get OTP</Button>
+              <Select placeholder="Select Occupation" size="lg" bg={label_bgcolor} onChange={(e) => setOccup(e.target.value)} color={occup ? "black" : "gray"}>
+
+                {occupations.map((occu) => (
+                  <option key={occu} value={occu.name}>
+                    {occu.name}
+                  </option>
+                ))}
+              </Select>
+              <Select placeholder="Select Higher Study Plan" size="lg" bg={label_bgcolor} onChange={(e) => setHighStudy(e.target.value)} color={highStudy ? "black" : "gray"}>
+
+                {higherstudies.map((highstud) => (
+                  <option key={highstud.name} value={highstud.name}>
+                    {highstud.name}
+                  </option>
+                ))}
+              </Select>
+              <File_Upload
+                onFileSelect={(file) => setphoto(file)}
+                label="Photo"
+              />
+
+              <Button colorScheme="red" width="100%" onClick={validateAllFields}>Get OTP</Button>
             </VStack>
           )}
 
           {currentModal === 'counsellor' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={(e) => setFirstName(e.target.value)} />
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={(e) => setLastName(e.target.value)} />
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={(e) => setContact(e.target.value)} />
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={(e) => setEmail(e.target.value)} />
+              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              {fnameError && <div className="text-danger">{fnameError}</div>}
+              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              {lnameError && <div className="text-danger">{lnameError}</div>}
+              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              {contactError && <div className="text-danger">{contactError}</div>}
+              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
                 size="lg"
@@ -758,7 +1058,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
               <Input placeholder="Applying for Part Time/ Full Time" size="lg" bg={label_bgcolor} onChange={(e) => setJobTime(e.target.value)} />
               <Input placeholder="Consulting Preferences" size="lg" bg={label_bgcolor} onChange={(e) => setConsultingPref(e.target.value)} /> */}
 
-              <Button colorScheme="red" width="100%" onClick={() => handleCurrScreen('uploadDocu')}>Next</Button>
+              <Button colorScheme="red" width="100%" onClick={validateAllFields}>Next</Button>
             </VStack>
           )}
 
@@ -767,42 +1067,45 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           {currentModal === 'counsellor' && currentScreen === 'uploadDocu' && (
             <VStack spacing={4} width="100%">
               {/* File Upload Fields */}
-              <FormControl>
-                <FormLabel>ID Proof</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>Photo</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>10th Marksheet</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>12th Marksheet</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>UG Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>PG Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>PhD Certificate</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
-              <FormControl>
-                <FormLabel>Resume</FormLabel>
-                <Input type="file" size="lg" bg={label_bgcolor} pt={2}/>
-              </FormControl>
 
-              <Button colorScheme="red" width="100%" onClick={() => { handleCurrScreen('getOTP'); sendOTP(); }}>
+              <File_Upload
+                onFileSelect={(file) => setIdProof(file)}
+                label="Id Proof"
+              />
+              <File_Upload
+                onFileSelect={(file) => setphoto(file)}
+                label="Photo"
+              />
+              <File_Upload
+                onFileSelect={(file) => setSscMarkSheet(file)}
+                label="10th Marksheet"
+              />
+              <File_Upload
+                onFileSelect={(file) => setHscMarkSheet(file)}
+                label="12th Marksheet"
+              />
+              <File_Upload
+                onFileSelect={(file) => setUgCertificate(file)}
+                label="UG Certificate"
+              />
+              <File_Upload
+                onFileSelect={(file) => setPgCertificate(file)}
+                label="PG Certificate"
+              />
+              <File_Upload
+                onFileSelect={(file) => setPhdCertificate(file)}
+                label="PhD Certificate"
+              />
+              <File_Upload
+                onFileSelect={(file) => setResume(file)}
+                label="Resume"
+              />
+
+              <Button colorScheme="red" width="100%" onClick={validateAllDocu}>
                 Get OTP
               </Button>
+              {fileError && <div className="text-danger">{fileError}</div>}
+
             </VStack>
 
           )}
@@ -810,10 +1113,14 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
           {currentModal === 'b2b' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={(e) => setFirstName(e.target.value)} />
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={(e) => setLastName(e.target.value)} />
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={(e) => setContact(e.target.value)} />
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={(e) => setEmail(e.target.value)} />
+              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              {fnameError && <div className="text-danger">{fnameError}</div>}
+              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              {lnameError && <div className="text-danger">{lnameError}</div>}
+              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              {contactError && <div className="text-danger">{contactError}</div>}
+              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
                 size="lg"
@@ -840,7 +1147,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
                 ))}
               </Select>
 
-              <Button colorScheme="red" width="100%" onClick={() => handleCurrScreen('selectStream')}>Next</Button>
+              <Button colorScheme="red" width="100%" onClick={validateAllFields}>Next</Button>
             </VStack>
           )}
 
@@ -949,11 +1256,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
             <VStack spacing={4} mt={4} alignItems="center"> {/* Added consistent spacing and alignment */}
 
               <Text fontSize="lg">Create Password</Text>
-              <Input placeholder="Enter password" size="lg" bg={label_bgcolor} mb={3} onChange={(e) => setPassword(e.target.value)} />
+              <Input placeholder="Enter password" size="lg" bg={label_bgcolor} mb={3} onChange={validatePassword} />
+              {passwordError && <div className="text-danger">{passwordError}</div>}
+
 
               <Text fontSize="lg">Re-enter Password</Text>
-              <Input placeholder="Re-enter password" size="lg" bg={label_bgcolor} mb={3} />
-
+              <Input placeholder="Re-enter password" size="lg" bg={label_bgcolor} mb={3} onChange={(e) => setRePassword(e.target.value)} />
+              {repasswordError && <div className="text-danger">{repasswordError}</div>}
               {/* Password points list */}
               {createPassPoints.map((point, i) => (
                 <Box

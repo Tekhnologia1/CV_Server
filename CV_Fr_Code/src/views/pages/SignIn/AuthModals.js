@@ -1,39 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SignUpModal from '../signup/Signup';  // Your signup modal
-import SignInModal from '../SignIn/SignIn';    // Your signin modal
+import SignInModal from './SignIn';    // Your signin modal
 
-const AuthModals = (openSignIn) => {
-  const [isSignUpOpen, setIsSignUpOpen] = useState(true);  // Initially open sign-up
-  const [isSignInOpen, setIsSignInOpen] = useState(false); // Initially closed sign-in
+const AuthModals = ({ openSignIn, openSignUp }) => {
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);  // Initially closed
+  const [isSignInOpen, setIsSignInOpen] = useState(false); // Initially closed
 
-  const openSignUpModal = () => {
-    setIsSignUpOpen(true); // Open SignUp modal
-    setIsSignInOpen(false); // Ensure SignIn modal is closed
-  };
+  useEffect(() => {
+    if (openSignIn) {
+      closeSignUpModal(); // Close sign-up modal if sign-in should open
+      setIsSignInOpen(true); // Open sign-in modal
+    } else if (openSignUp) {
+      setIsSignInOpen(false); // Close sign-in modal if sign-up should open
+      setIsSignUpOpen(true); // Open sign-up modal
+    }
+  }, [openSignIn, openSignUp]);
 
-  const openSignInModal = () => {
-    setIsSignInOpen(true);  // Open SignIn modal
-    setIsSignUpOpen(false); // Close SignUp modal
-  };
-
-  const closeSignUpModal = () => {
-    setIsSignUpOpen(false); // Close SignUp modal
-  };
-
-  const closeSignInModal = () => {
-    setIsSignInOpen(false); // Close SignIn modal
-  };
+  const closeSignUpModal = () => setIsSignUpOpen(false);
+  const closeSignInModal = () => setIsSignInOpen(false);
 
   return (
     <>
-      {/* Sign Up Modal */}
       <SignUpModal
         isOpen={isSignUpOpen}
         onClose={closeSignUpModal}
-        openSignIn={openSignInModal}  // Pass this prop to handle switching modals
       />
 
-      {/* Sign In Modal */}
       <SignInModal
         isOpen={isSignInOpen}
         onClose={closeSignInModal}
@@ -43,9 +35,3 @@ const AuthModals = (openSignIn) => {
 };
 
 export default AuthModals;
-
- {/* <SignInModal
-                isOpen={isSignInOpen}
-                onClose={onSignInClose}
-                onOpen={onSignUpOpen}   // Pass function to open SignUp modal
-            /> */}

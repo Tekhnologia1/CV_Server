@@ -49,6 +49,12 @@ const SignInModal = ({ isOpen, onClose }) => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false); // Loading state
 
+    //------------------------
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
     useEffect(() => {
         if (user?.userId) {
             console.log(user.userId); // Log userId when user state changes
@@ -70,7 +76,7 @@ const SignInModal = ({ isOpen, onClose }) => {
         if (currentScreen === 'welcome') {
             // Set up a delay before navigating
             const timer = setTimeout(() => {
-                navigate('/dashboard'); // Redirect after 5 seconds or adjust as needed
+                navigate('/'); // Redirect after 5 seconds or adjust as needed
             }, 3000); // 5 seconds delay
 
             // Clean up the timer if the component unmounts
@@ -105,11 +111,55 @@ const SignInModal = ({ isOpen, onClose }) => {
         setCurrentScreen(screen_name);
     }
 
+    //---------Validations---------------------------------------------------------------
+
+    const validateEmail = (e) => {
+        if ((e.target.value).length >= 0) {
+            setEmail(e.target.value);
+            setEmailError('');
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (regex.test(email)) {
+                setEmailError('');
+                return true;
+            } else {
+                setEmailError('Enter valid email address.');
+                return false;
+            }
+        } else {
+            setEmailError('Email address must not be blank.');
+            return false;
+        }
+    };
+
+    const validatePassword = (e) => {
+        const password = e.target.value;
+        setPassword(password);
+        setPasswordError('');
+        const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%`~#^&*()-_+={};:'",.<>*?&]{8,}$/;
+        if (regex.test(password)) {
+            setPasswordError('');
+            return true;
+        } else {
+            setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
+            return false;
+        }
+    };
+
+
+    //---------Validations End---------------------------------------------------------------
+
+
     const login = () => {
-        // if (!validateEmail(email)) {
-        //   setErrorMessage('Invalid email');
-        //   return;
-        // }
+
+
+        if (!validateEmail({ target: { value: email } })) {
+            setEmailError('Invalid Email.');
+            return;
+        }
+        if (!validatePassword({ target: { value: password } })) {
+            setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
+            return;
+        }
         setIsLoading(true); // Set loading to true
 
         console.log(email);
@@ -158,6 +208,10 @@ const SignInModal = ({ isOpen, onClose }) => {
                 // setSuccessMessage('');
                 setIsLoading(false); // Stop loading
                 console.log('Error');
+                setErrorMessage("Invalid vvsdf");
+                const timer = setTimeout(() => {
+                    setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
+                }, 1000); // 5 seconds delay
 
             }
 
@@ -175,6 +229,10 @@ const SignInModal = ({ isOpen, onClose }) => {
             //   }
             //   setSuccessMessage('');
             setIsLoading(false); // Stop loading
+            setErrorMessage("Invalid credentials");
+            const timer = setTimeout(() => {
+                setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
+            }, 1000); // 5 seconds delay
 
         });
     };
@@ -252,7 +310,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
                     <ModalHeader position="relative">
                         {/* Back button at top left */}
-                        {currentScreen === 'signIn' && (
+                        {/* {currentScreen === 'signIn' && (
 
                             <Button
                                 variant="ghost"
@@ -264,7 +322,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                             >
                                 Back
                             </Button>
-                        )}
+                        )} */}
                         {/* Logo centered */}
                         {currentScreen === 'signIn' && (
 
@@ -300,15 +358,16 @@ const SignInModal = ({ isOpen, onClose }) => {
                         {currentScreen === 'signIn' && (
                             <VStack spacing={4}>
                                 <Input
-                                    placeholder="Enter User ID or Contact Number"
+                                    placeholder="Enter email address"
                                     size="lg"
                                     focusBorderColor="blue.500"
                                     bg="white"
                                     borderRadius="5px"
                                     fontSize={{ base: "sm", md: "md" }}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={validateEmail}
 
                                 />
+                                {emailError && <div className="text-danger">{emailError}</div>}
                                 <Input
                                     placeholder="Enter Password"
                                     type="password"
@@ -317,8 +376,10 @@ const SignInModal = ({ isOpen, onClose }) => {
                                     bg="white"
                                     borderRadius="5px"
                                     fontSize={{ base: "sm", md: "md" }}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={validatePassword}
                                 />
+                                {passwordError && <div className="text-danger">{passwordError}</div>}
+
                                 <Link href="#" alignSelf="flex-start" color="black" fontSize={{ base: "xs", md: "sm" }} textDecoration={'underline'}>
                                     Forgot Password?
                                 </Link>
@@ -370,6 +431,8 @@ const SignInModal = ({ isOpen, onClose }) => {
                                     'Sign In'
                                 }
                             </Button>
+                            {errorMessage && <div className="text-danger">{errorMessage}</div>}
+
 
                             <Text fontSize={{ base: "sm", md: "md" }}>
                                 New here?{' '}
@@ -400,3 +463,10 @@ const SignInModal = ({ isOpen, onClose }) => {
 };
 
 export default SignInModal;
+
+
+{/* <SignUpModal
+                isOpen={isSignUpOpen}
+                onClose={closeSignUpModal}
+
+            /> */}

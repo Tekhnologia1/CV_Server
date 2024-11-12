@@ -90,6 +90,21 @@ const GetAllUsers = async (req, res) => {
     }
 };
 
+const GetAllCounsellors = async (req, res) => {
+    try {
+        const [rows] = await sql.query('CALL GetAllCounsellor()');
+        
+        if (!rows || rows.length === 0) {
+            return res.status(404).json({ message: 'No Counsellor found' });
+        }
+
+        return res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error fetching counsellors:', error);
+        return res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 const GetUsersById = async (req, res) => {
     const { id } = req.params; // Get the user ID from the request parameters
 
@@ -365,4 +380,4 @@ const verifyOTP = async (req, res) => {
 };
 
  
-module.exports = {CreateUser, GetAllUsers, GetUsersById, deleteUserById, updateUserById, loginUser, sendCode, verifyOTP};
+module.exports = {CreateUser, GetAllUsers, GetAllCounsellors, GetUsersById, deleteUserById, updateUserById, loginUser, sendCode, verifyOTP};

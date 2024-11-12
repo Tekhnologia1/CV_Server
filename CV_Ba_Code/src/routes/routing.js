@@ -7,6 +7,9 @@ const Roles = require('../controllers/rolesController');
 const Users = require('../controllers/usersController');
 const { verifyToken } = require('../middleware/authMiddleware');
 
+const mainStreams = require('../controllers/mainStreamsController');
+const SubStreams = require('../controllers/subStreamsController')
+
 
 // tbl_employee_types routes
 Router.post('/AddRole', Roles.create); // Create a new Role
@@ -17,6 +20,7 @@ Router.get('/protected', verifyToken, (req, res) => {
     res.json({ message: 'This is a protected route', userId: req.userId, roleId: req.role_id });
 });
 
+// Users Routes
 // login OTP verifiation 
 Router.post('/sendOTP', Users.sendCode);
 Router.post('/verifyOTP', Users.verifyOTP);
@@ -34,10 +38,15 @@ Router.post('/AddUser', upload.fields([
 ]),  Users.CreateUser);
 
 Router.get('/GetAllUsers', Users.GetAllUsers);
+Router.get('/GetAllCounsellor', Users.GetAllCounsellors)
 Router.get('/User/:id', Users.GetUsersById);
 Router.delete('/deleteUser/:id',Users.deleteUserById);
 Router.put('/UpdateUser/:id', Users.updateUserById);
 
+// Main Streams Routes
+Router.get('/GetAllMainStreams', mainStreams.GetAllMainStreams)
 
+// Sub Streams Routes
+Router.get('/GetAllMainStreamWiseSubStreams/:id', SubStreams.GetAllMainStreamWiseSubStreams);
 
 module.exports = Router;

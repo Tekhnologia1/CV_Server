@@ -132,7 +132,8 @@ const getNavItems = (role) => [
     },
     {
         label: 'Dashboard',
-        href: (role === null ? '/' : '/dashboard')
+        // href: (role === null ? '/' : '/dashboard')
+        href: '/dashboard'
     },
     {
         label: 'Services',

@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
     Box, Heading, Text, SimpleGrid, Grid, Flex, Image, Button,
     UnorderedList, ListItem, Accordion, AccordionItem, Stack,
-    AccordionButton, AccordionPanel, AccordionIcon, useColorModeValue
+    AccordionButton, AccordionPanel, AccordionIcon, useColorModeValue,
+    textDecoration
 } from '@chakra-ui/react';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -31,6 +32,7 @@ import Testimonial_image from "src/assets/images/Home/Testimonial_image.png";
 import banner_image1 from "src/assets/images/Home/banner_image1.png";
 import VideoGrid from "src/views/pages/home/VideoGrid";
 import { UserContext } from 'src/context/UserContextProvider';
+import AuthModals from "../SignIn/AuthModals";
 
 
 const Home = () => {
@@ -155,6 +157,13 @@ const Home = () => {
         },
     ];
 
+    const bannerImagePoints = [
+        'Should I pursue a Diploma for Vocational Training?',
+        'Should I opt for a Bachelors in Traditional Streams?',
+        'Is Humanities my true calling?',
+        'Is Commerce the path to my future?'
+    ]
+
 
 
     const settings = {
@@ -193,6 +202,20 @@ const Home = () => {
             description: ['Signing up for Career Vidyalaya, and meeting and interacting with their experienced team was one of the best decisions I made.'],
         },
     ];
+
+    const [openSignIn, setOpenSignIn] = useState(false);
+    const [openSignUp, setOpenSignUp] = useState(false);
+
+    const openSignInf = () => {
+        setOpenSignIn(true);
+        setOpenSignUp(false);
+    }
+
+    const openSignUpf = () => {
+        setOpenSignUp(true);
+        setOpenSignIn(false);
+
+    }
 
 
     return (
@@ -240,7 +263,7 @@ const Home = () => {
                             templateColumns={['1fr', 'repeat(2, 1fr)']}
                             gap={12}
                             justifyContent="center"
-                            px={[4, 6, 8]}
+                            px={['0px', '20px', '15px', '50px', '170px', '290px']}
                         >
                             {cardData1.slice(3).map((card, i) => (
                                 <CardComponent key={i} image={card.image} title={card.title} description={card.description} />
@@ -317,8 +340,25 @@ const Home = () => {
 
                 {/* 6th Row - Banner Image */}
                 <Box mb={10}>
-                    <Image src={banner_image1} alt="Card Image" width="100%" />
+                    <Link to={'/'}>
+                        <Image src={banner_image1} alt="Card Image" width="100%" />
+                    </Link>
+                    {/* <Box
+                        position="absolute"
+                        top={["65%", "53%", "55%", "55%", "80%", "83%"]}
+                        right={["10%","10%","10%","22%","22%"]}
+                        transform="translate(-50%, -50%)"
+                        textAlign="center"
+
+                    >
+                        <Button color="black" bgColor="#9d3acc" _hover={{ bgColor: "#8d7dfa" }} width={['70%', '80%', '90%', '100%', '100%', '100%']} height={['100%','100%','100%']} borderRadius={'none'} fontSize={[10, 14, 15, 17, 23, 24]} py={[2, 2, 2, 2, 2, 3]} alignItems={'center'}>
+                            <Link to={'/'}>
+                                Speak to an Expert
+                            </Link>
+                        </Button>
+                    </Box> */}
                 </Box>
+
 
                 {/* 8th Row - Title and Accordion */}
                 <Box mb={10} mx={[4, 8, 12]} px={['20px', '50px', '100px', '100px', '100px', '300px']}>
@@ -341,10 +381,24 @@ const Home = () => {
                         ))}
                     </Accordion>
                     <Box display="flex" justifyContent="flex-end" mt={3}>
-                        <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'}>
+
+                        {/* <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'}>
                             Show More FAQs
+                        </Button> */}
+                        <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'} onClick={openSignInf}>
+                            signin
                         </Button>
+                        <Button variant="link" color={tilecolor_purple} fontFamily={font_family} fontWeight={'500'} onClick={openSignUpf}>
+                            signup
+                        </Button>
+                        <AuthModals
+                            openSignIn={openSignIn}
+                            openSignUp={openSignUp}
+                        />
                     </Box>
+
+
+
                 </Box>
 
                 {/* 9th Row - Footer */}
@@ -390,7 +444,10 @@ const CardComponent = ({ image, title, description }) => (
 
 // SlicerCard Component (used in the slider)
 const SlicerCardComponent = ({ image, testi_name, description }) => (
-    <Box bg="white" boxShadow="md" rounded="lg" overflow="hidden" p={5} textAlign="center" mx={3}>
+    <Box bg="white" boxShadow="md" rounded="lg" overflow="hidden" p={5} textAlign="center" mx={3}
+        transition="all 0.2s"
+        _hover={{ transform: 'scale(1.05)' }}
+    >
         {/* <Flex direction={['column', 'row']} align="center" justify="space-between">
             <Image src={image} alt="Testimonial Image" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
             <Box ml={[0, 4]} mt={[4, 0]}>
@@ -429,6 +486,8 @@ const CardWithButtonComponent = ({ image, title, description }) => (
         py={5}
         textAlign="center"
         position="relative" // Allow absolute positioning for the tag
+        transition="all 0.2s"
+        _hover={{ transform: 'scale(1.05)' }}
     >
         {/* Recommended Tag */}
         {title === "Premium" && (

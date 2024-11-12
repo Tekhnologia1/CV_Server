@@ -123,7 +123,7 @@ const Services = () => {
         },
         {
             image: card_3_image2,
-            title: "Student's cell",
+            title: "Career Expedition",
             description: 'Know more',
         },
         {
