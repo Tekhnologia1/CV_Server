@@ -3,7 +3,7 @@ import { CButton, CCol, CForm, CFormInput, CInputGroup, CRow } from '@coreui/rea
 import { Link, useParams } from 'react-router-dom';
 
 
-import { APIRegister } from 'src/api/APIRegister';
+import { APIRegister } from 'src/services/api/APIRegister';
 
 const New_Password = () => {
 

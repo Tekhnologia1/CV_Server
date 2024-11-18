@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Routess from './Route/Routess'
 import { UserContextProvider } from './context/UserContextProvider';
 import { ChakraProvider } from '@chakra-ui/react';
+import AdminRoute from './Route/AdminRoute';
 
 
 
@@ -15,6 +16,7 @@ class App extends Component {
     return (
       <UserContextProvider>
         <ChakraProvider>
+          <AdminRoute />
           <Routess />
         </ChakraProvider>
       </UserContextProvider>

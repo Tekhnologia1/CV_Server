@@ -6,7 +6,7 @@ import image3 from "src/assets/images/counsellors_image/image3.png";
 import image4 from "src/assets/images/counsellors_image/image4.png";
 import image5 from "src/assets/images/counsellors_image/image5.png";
 import image6 from "src/assets/images/counsellors_image/image6.png";
-import { APIStudent } from 'src/api/APIStudent';
+import { APIStudent } from 'src/services/api/APIStudent';
 
 
 

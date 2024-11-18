@@ -68,8 +68,8 @@ const Counselling = () => {
 
     const accordian = [
         {
-            title: 'What Is Career Counselling & Career Guidance?',
-            description: "Career Counselling: Career counselling and career guidance are two terms often thought to be the same, but they have different purposes. Career counselling primarily involves one-on-one or online sessions with a career guidance counsellor who assesses an individual's skills, interests, aspirations, and intelligences, puts together the information, and points students in the right direction",
+            title: 'What Is Career Consulting & Career Guidance?',
+            description: "Career Consulting: Career consulting and career guidance are two terms often thought to be the same, but they have different purposes. Career counselling primarily involves one-on-one or online sessions with a career guidance consultant who assesses an individual's skills, interests, aspirations, and intelligences, puts together the information, and points students in the right direction",
 
         },
         // {
@@ -145,7 +145,7 @@ const Counselling = () => {
                                     fontSize={title_size2}
                                     fontWeight={['650', '650', '500']}
                                 >
-                                    Current Counselling Status:{" "}
+                                    Current Consulting Status:{" "}
                                     <Text as="span" color="#EB543B" fontWeight="inherit"> {/* Ensuring it inherits the font weight */}
                                         Pending
                                     </Text>

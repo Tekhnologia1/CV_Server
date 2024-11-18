@@ -14,7 +14,7 @@ const Routess = () => {
     
   }, [user])
 
-  console.log(role);
+  // console.log(role);
   const loading = (
     <div className="pt-3 text-center">
       <div className="sk-spinner sk-spinner-pulse"></div>
@@ -50,6 +50,10 @@ const Routess = () => {
   const Student_Dashboard = React.lazy(() => import('../views/Student/Student_Dashboard/Student_Dashboard'))
   const Testing_Tools = React.lazy(() => import('../views/Student/Testing_Tools'))
   const Counselling = React.lazy(() => import('../views/Student/Counselling'))
+
+  const TermsAndConditions = React.lazy(() => import('../views/pages/Terms&Conditions/TermsAndC'))
+  const PrivacyPolicy = React.lazy(() => import('../views/pages/Terms&Conditions/PrivacyPolicy'))
+
 
   const My_Profile = React.lazy(() => import('../views/pages/home/My_Profile'))
 
@@ -101,6 +105,9 @@ const Routess = () => {
           <Route path={"/dashboard"} name="Student_Dashboard" element={<Student_Dashboard />} />
           <Route path="/testing_tools" name="Testing_Tools" element={<Testing_Tools />} />
           <Route path={role === null ? "/" : "/counselling"} name="Counselling" element={<Counselling />} />
+
+          <Route path="/termsandconditions" name="TermsAndConditions" element={<TermsAndConditions />} />
+          <Route path="/privacypolicy" name="PrivacyPolicy" element={<PrivacyPolicy />} />
 
 
 

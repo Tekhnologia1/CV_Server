@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 const mySqlPool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: 'mysql12345678',  // Keep this secure
+    password: 'Tekhnologia@123',  // Keep this secure
     database: 'cvdb',
     waitForConnections: true,
     connectionLimit: 10,

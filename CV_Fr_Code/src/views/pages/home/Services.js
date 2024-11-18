@@ -59,6 +59,7 @@ import Slider from "react-slick";
 import { Col, Row } from 'react-bootstrap';
 import { CButton } from '@coreui/react';
 import { UserContext } from 'src/context/UserContextProvider';
+import TCModal from '../Terms&Conditions/TCModal';
 
 
 const Services = () => {
@@ -81,8 +82,15 @@ const Services = () => {
     const title_size = ["2xl", "3xl", "4xl", "5xl"]
     const discounted_price_size = ["3xl", "4xl", "5xl", "6xl"]
     const regular_prize_size = ["xl", "xl", "2xl", "2xl"]
+    const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
+    const openCheckOutModal = () => {
+        setIsCheckoutOpen(true);
+    }
 
+    const closeCheckoutModal =()=> {
+        setIsCheckoutOpen(false);
+    }
     // Data for the 5 cards (images, titles, descriptions)
     const cardData1 = [
         {
@@ -136,8 +144,8 @@ const Services = () => {
     // Data for the 5 cards (images, titles, descriptions)
     const accordian = [
         {
-            title: 'What Is Career Counselling & Career Guidance?',
-            description: "Career Counselling: Career counselling and career guidance are two terms often thought to be the same, but they have different purposes. Career counselling primarily involves one-on-one or online sessions with a career guidance counsellor who assesses an individual's skills, interests, aspirations, and intelligences, puts together the information, and points students in the right direction",
+            title: 'What Is Career Consulting & Career Guidance?',
+            description: "Career Consulting: Career consulting and career guidance are two terms often thought to be the same, but they have different purposes. Career consulting primarily involves one-on-one or online sessions with a career guidance consultant who assesses an individual's skills, interests, aspirations, and intelligences, puts together the information, and points students in the right direction",
 
         },
         // {
@@ -168,7 +176,7 @@ const Services = () => {
             plan_image: plan2_image,
             image: Star,
             title: 'Advanced',
-            description: ['Includes all services from basic package', 'A 30 minutes counseling session with student to finalize the career option', 'A 30 minutes counselling session with parents/relatives to understand the parents expectations and students capabilities'],
+            description: ['Includes all services from basic package', 'A 30 minutes consulting session with student to finalize the career option', 'A 30 minutes consulting session with parents/relatives to understand the parents expectations and students capabilities'],
             discountPrice: '4,799',
             regularPrice: '7,999',
             discountText: '40% off',
@@ -179,7 +187,7 @@ const Services = () => {
             plan_image: plan3_image,
             image: Crown,
             title: 'Premium',
-            description: ['Includes all services from Basic and Advance package', 'Monthly/quarterly webinars and seminars from industry experts on career scopes', 'Live interactive sessions from previous years toppers in entrance examinations and first year students from different careers', 'Unlimited access to community resources that includes admission process guidance and college selections', 'Financial aid for economocal challenges from govt and semi-govt organization', 'Prevelaged access to choose top rated counsellors from Career Vidyalaya certified counsellors'],
+            description: ['Includes all services from Basic and Advance package', 'Monthly/quarterly webinars and seminars from industry experts on career scopes', 'Live interactive sessions from previous years toppers in entrance examinations and first year students from different careers', 'Unlimited access to community resources that includes admission process guidance and college selections', 'Financial aid for economocal challenges from govt and semi-govt organization', 'Prevelaged access to choose top rated consultants from Career Vidyalaya certified consultants'],
             discountPrice: '6,599',
             regularPrice: '10,999',
             discountText: '40% off',
@@ -343,7 +351,7 @@ const Services = () => {
 
                 {/* Section - Title, Plans (1 card per row) */}
                 <Box bg="#E7F9E4" p={5} mb={10} px={['30px', '30px', '30px', '5px', '5px']}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size} onClick={openCheckOutModal}>
                         Our Plans
                     </Heading>
                     <Box display="flex" justifyContent="center" alignItems="center">
@@ -371,7 +379,11 @@ const Services = () => {
                             />
                         ))}
                     </SimpleGrid>
+                    <TCModal
+                        isOpen={isCheckoutOpen}
+                        onClose={closeCheckoutModal}
 
+                    />
                     <Text fontSize={regular_prize_size} textAlign="center" mt={5}>
                         Discounted introductory price is for the first three months.
                     </Text>
@@ -563,7 +575,7 @@ const CardWithButtonComponent = ({ image1, image2, title, description, price, di
             )}
 
             <Flex direction={{ base: 'column', md: 'row' }} align="start" justify="space-between" textAlign="left" alignItems="center"
-                    justifyContent="center" justifyItems={'center'}>
+                justifyContent="center" justifyItems={'center'}>
                 {/* Card Image and Title */}
                 <Box direction="column" mr={{ base: 0, md: 4 }} mb={{ base: 4, md: 0 }}>
                     <Image src={image1} alt="Card Image" w={{ base: '100%', sm: '150px' }} h="auto" />
@@ -596,8 +608,8 @@ const CardWithButtonComponent = ({ image1, image2, title, description, price, di
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
-                    mt={title === 'Premium' && '20px' }
-                    >   
+                    mt={title === 'Premium' && '20px'}
+                >
                     {/* Pricing Section */}
                     <Box>
                         <Text color={tilecolor_purple} fontSize={title_size} fontWeight="bold">
@@ -627,6 +639,7 @@ const CardWithButtonComponent = ({ image1, image2, title, description, price, di
                         fontSize={regular_prize_size}
                         rounded={'none'}
                         w={{ base: '100%', sm: 'auto' }} // Full width on small screens
+                        
                     >
                         {buttonText || 'Subscribe'}
                     </Button>

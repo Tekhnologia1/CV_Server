@@ -32,13 +32,14 @@ import arts from "src/assets/icons/select_stream_icons/arts.png";
 import check_mark from "src/assets/icons/check_mark.png";
 import { Image } from 'react-bootstrap';
 import AuthModals from "src/views/pages/SignIn/AuthModals";
-import { APIRegister } from 'src/api/APIRegister';
-import { api_url } from 'src/api/APIURL';
+import { APIRegister } from 'src/services/api/APIRegister';
+import { api_url } from 'src/services/api/APIURL';
 import axios from 'axios';
 
 import { Country, State, City } from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city'
 import File_Upload from 'src/components/othercomponents/FileUploadComponent';
+import { ArrayData } from 'src/services/arrayData/ArrayData';
 
 
 const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
@@ -74,113 +75,40 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   //---------------------------
-  const [genders] = useState(
-    [
-      { 'name': 'Male' },
-      { 'name': 'Female' },
-      { 'name': 'Other' }
-    ]
-  );
+  
+  const { genders } = ArrayData();
   const [gender, setGender] = useState('');
 
   //---------Student Sign Up Fields
   const [instituteName, setInstituteName] = useState('');
-  const [studClasses] = useState(
-    [
-      { 'name': '7th' },
-      { 'name': '8th' },
-      { 'name': '9th' },
-      { 'name': '10th' },
-      { 'name': '11th' },
-      { 'name': '12th' },
-    ]
-  );
+  const { studClasses } = ArrayData();
   const [studClass, setStudClass] = useState('');
   //-------------------------------
 
   //---------Parent Sign Up Fields
-
-  const [occupations] = useState(
-    [
-      { 'name': 'Accountant' },
-      { 'name': 'Banker' },
-      { 'name': 'Business Manager' },
-      { 'name': 'Civil Servant' },
-      { 'name': 'Data Scientist' },
-      { 'name': 'Doctor' },
-      { 'name': 'Engineer' },
-      { 'name': 'Entrepreneur' },
-      { 'name': 'Graphic Designer' },
-      { 'name': 'Homemaker' },
-      { 'name': 'IT Specialist' },
-      { 'name': 'Journalist' },
-      { 'name': 'Lawyer' },
-      { 'name': 'Marketing Specialist' },
-      { 'name': 'Musician' },
-      { 'name': 'Nurse' },
-      { 'name': 'Pharmacist' },
-      { 'name': 'Photographer' },
-      { 'name': 'Professor' },
-      { 'name': 'Real Estate Agent' },
-      { 'name': 'Researcher' },
-      { 'name': 'Retired' },
-      { 'name': 'Sales Representative' },
-      { 'name': 'Software Developer' },
-      { 'name': 'Teacher' },
-      { 'name': 'Other' }
-    ]
-  )
-
+  const { occupations } = ArrayData();
   const [occup, setOccup] = useState('');
 
-  const [higherstudies] = useState(
-    [
-      { 'name': "Master's Programs" },
-      { 'name': 'Doctoral Programs' },
-      { 'name': 'Diploma Programs' },
-      { 'name': 'Study Abroad' },
-      { 'name': 'Other' }
-    ]
-  )
-
+  const { higherstudies } = ArrayData();
   const [highStudy, setHighStudy] = useState('');
 
-
   const [photo, setphoto] = useState(null);
-
-
-  console.log(photo)
+  // console.log(photo);
   //--------------------------------
-  const [educations] = useState(
-    [
-      { 'name': 'Graduation' },
-      { 'name': 'Post Graduation' }
-    ]
-  );
+  const { educations } = ArrayData();
+ 
   const [education, setEducation] = useState('');
-  const [experiences] = useState(
-    [
-      { 'name': '1-3' },
-      { 'name': '3-5' },
-      { 'name': '5+' }
-    ]
-  );
+
+  const { experiences } = ArrayData();
+  
   const [experience, setExperience] = useState('');
-  const [jobtimings] = useState(
-    [
-      { 'name': 'Part Time' },
-      { 'name': 'Full Time' }
-    ]
-  );
+
+  const { jobtimings } = ArrayData();
+  
   const [jobTime, setJobTime] = useState('');
-  const [consultingPrefs] = useState(
-    [
-      { 'name': '7th to 9th' },
-      { 'name': '10th' },
-      { 'name': '11th and 12th' },
-      { 'name': '12th + Graduates' }
-    ]
-  );
+
+  const { consultingPrefs } = ArrayData();
+  
   const [consultingPref, setConsultingPref] = useState('');
   //Docu
   const [IdProof, setIdProof] = useState(null);
@@ -557,6 +485,11 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
       formData.append('jobTime', jobTime);
       formData.append('consultingPref', consultingPref);
       //   Add more fields as needed
+    }
+
+    if (currentModal === 'student' || currentModal === 'parent' || currentModal === 'counsellor') {
+      formData.append('photo', photo);
+     
     }
 
     formData.forEach((value, key) => {

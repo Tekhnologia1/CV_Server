@@ -10,11 +10,17 @@ import {
   useColorModeValue,
   Button,
   Image,
+  ModalHeader,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalBody,
 } from '@chakra-ui/react'
 import { FaInstagram, FaLinkedin, FaFacebook, FaEnvelope } from 'react-icons/fa'
 import { BiPhoneCall } from 'react-icons/bi'
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 
 const SocialButton = ({ children, label, href }) => {
@@ -32,7 +38,7 @@ const SocialButton = ({ children, label, href }) => {
       justifyContent={'center'}
       transition={'background 0.3s ease'}
       _hover={{
-        bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+        bg: useColorModeValue('blackAlpha.400', 'whiteAlpha.300'),
       }}>
       <Text srOnly>{label}</Text>
       {children}
@@ -41,11 +47,23 @@ const SocialButton = ({ children, label, href }) => {
 }
 
 export default function Footer() {
-  const bold_font_weight = '700';
-  const bold_font_size = ['20px', '20px', '22px']
+  const bold_font_weight = '600';
+  const bold_font_size = ['16px', '16px', '18px']
   const footer_group_mb = '0'
   const font_family = 'Poppins, sans-serif'
 
+  const [email, setEmail] = useState('');
+  const [openModal, setOpenModal] = useState(false);
+
+  const openEmailModal = () => {
+    if (email) {
+      setOpenModal(true);
+    }
+    setTimeout(() => {
+      closeEmailModal();
+    }, 1000);
+  }
+  const closeEmailModal = () => setOpenModal(false)
 
 
 
@@ -64,10 +82,10 @@ export default function Footer() {
               Call Our Helpline
             </Text>
             <Text textAlign={'start'}>Got career-related questions? Talk to our experts!</Text>
-            <Stack direction={'row'} align={'center'}>
+            <Stack direction={'row'} align={'center'} verticalAlign={'center'}>
               <IconButton
                 as={'a'}
-                href="tel:+918939877998"
+                href="tel:+91 8983055973"
                 bg={'red.500'}
                 color={'white'}
                 aria-label="Phone"
@@ -93,6 +111,7 @@ export default function Footer() {
                 _focus={{
                   bg: useColorModeValue('gray.200', 'gray.900'),
                 }}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <IconButton
                 bg={'orange.400'}
@@ -102,9 +121,26 @@ export default function Footer() {
                 }}
                 aria-label="Subscribe"
                 icon={<FaEnvelope />}
+                onClick={openEmailModal}
               />
             </Stack>
           </Stack>
+          {/* Modal for subscription confirmation */}
+          <Modal isOpen={openModal} onClose={closeEmailModal} isCentered >
+            <ModalOverlay
+              backdropFilter={email ? 'blur(10px)' : 'none'} // Apply blur conditionally
+            />
+            <ModalContent
+              mx={{ base: "10px", sm: "20px", md: "auto" }}
+            >
+              <ModalHeader textAlign={'center'} color={'green.500'}>
+                Thank You for visiting our platform.
+              </ModalHeader>
+              <ModalBody textAlign={'center'} fontSize={['md', 'lg', 'lg']}>
+                Our team will contact you soon.
+              </ModalBody>
+            </ModalContent>
+          </Modal>
 
           {/* Stay Connected Section */}
           <Stack>
@@ -113,7 +149,9 @@ export default function Footer() {
             </Text>
             <Text textAlign={'start'}>Stay updated with all things career - trends, inspiration, and more.</Text>
             <Stack direction={'row'} spacing={4} align={'center'}>
-              <SocialButton label={'YouTube'} href={'#'}>
+              <SocialButton label={'Email'} href="mailto:info@careervidyalaya.com"
+                
+              >
                 <FaEnvelope />
               </SocialButton>
               <SocialButton label={'Instagram'} href={'#'}>
@@ -159,8 +197,8 @@ export default function Footer() {
               {/* 2nd Stack */}
               <Stack direction={'column'} align={'start'} fontWeight={bold_font_weight} gap={'0'}>
                 <Text mb={footer_group_mb}>Contact Us</Text>
-                <Text mb={footer_group_mb}>Terms and Conditions</Text>
-                <Text mb={footer_group_mb}>Privacy Policy</Text>
+                <Text mb={footer_group_mb}><Link to={'/termsandconditions'}>Terms and Conditions</Link></Text>
+                <Link to={'/privacypolicy'}><Text mb={footer_group_mb}>Privacy Policy</Text></Link>
                 <Text mb={footer_group_mb}>Disclaimer</Text>
               </Stack>
             </SimpleGrid>

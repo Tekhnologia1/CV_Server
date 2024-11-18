@@ -6,7 +6,7 @@ const Router = require('./routes/routing');
 
 const app = express();
 app.use(cors()); // Call cors as a function
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4001;
 
 // Middleware to parse JSON requests
 app.use(express.json());

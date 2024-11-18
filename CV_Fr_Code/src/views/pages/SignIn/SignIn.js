@@ -20,14 +20,14 @@ import {
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
 import Student from "src/assets/icons/welcome_icons/student.png";
 import Parent from "src/assets/icons/welcome_icons/parent.png";
-import { APIRegister } from 'src/api/APIRegister';
+import { APIRegister } from 'src/services/api/APIRegister';
 import SignUpModal from '../signup/Signup';
 import { BiUnderline } from 'react-icons/bi';
 import { jwtDecode } from 'jwt-decode';
 import { Auth } from 'src/auth/AuthUser';
 import { UserContext } from 'src/context/UserContextProvider';
 import { useNavigate } from 'react-router-dom';
-import { api_url } from 'src/api/APIURL';
+import { api_url } from 'src/services/api/APIURL';
 import axios from 'axios';
 
 // import handleRoleClick from "../signup/Signup";
@@ -113,7 +113,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
     //---------Validations---------------------------------------------------------------
 
-    const validateEmail = (e) => {
+    const  validateEmail = (e) => {
         if ((e.target.value).length >= 0) {
             setEmail(e.target.value);
             setEmailError('');
@@ -208,7 +208,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                 // setSuccessMessage('');
                 setIsLoading(false); // Stop loading
                 console.log('Error');
-                setErrorMessage("Invalid vvsdf");
+                setErrorMessage("Invalid credentials");
                 const timer = setTimeout(() => {
                     setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
                 }, 1000); // 5 seconds delay
