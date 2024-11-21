@@ -15,7 +15,8 @@ import {
     Text,
     VStack,
     Spinner, // Import the Spinner component
-    Heading
+    Heading,
+    Checkbox
 
 } from '@chakra-ui/react';
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
@@ -33,7 +34,7 @@ import axios from 'axios';
 
 // import handleRoleClick from "../signup/Signup";
 
-const TCModal = ({ isOpen, onClose }) => {
+const TCModal = ({ isOpen, onClose, selectedDiscountPrice }) => {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -45,11 +46,13 @@ const TCModal = ({ isOpen, onClose }) => {
     const [currentScreen, setCurrentScreen] = useState('tc');
     const [user_role, setUser_Role] = useState('');
 
-   
+
     const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [isCheckedTC, setIsCheckedTC] = useState(false);
+    const [isCheckedCR, setIsCheckedCR] = useState(false);
 
     //------------------------
-   
+
     const [errorMessage, setErrorMessage] = useState('');
 
 
@@ -78,8 +81,14 @@ const TCModal = ({ isOpen, onClose }) => {
 
     const closeModal = () => {
         onClose();
+
+        setIsCheckedTC(false);
+        setIsCheckedCR(false);
+        setErrorMessage('');
         // setCurrentModal('signIn');
         setCurrentScreen('tc');
+
+
     }
 
     const handleCurrScreen = (screen_name) => {
@@ -90,10 +99,31 @@ const TCModal = ({ isOpen, onClose }) => {
 
 
     const handleNext = () => {
-        if (currentScreen === 'tc') {
-            handleCurrScreen('crefund');
-        } else if (currentScreen === 'crefund') {
-            handleCurrScreen('paynow');
+
+        if (isCheckedTC) {
+            setErrorMessage('');
+            if (currentScreen === 'tc') {
+                handleCurrScreen('crefund');
+                setErrorMessage('');
+                
+            }
+        } else {
+            setErrorMessage('You must accept the Terms and Conditions');
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 2000);
+        }
+
+        if (isCheckedCR) {
+            setErrorMessage('');
+            if (currentScreen === 'crefund') {
+                handleCurrScreen('paynow');
+            }
+        } else {
+            setErrorMessage('You must accept the Cancellation and Refund Policy');
+            setTimeout(() => {
+                setErrorMessage('');
+            }, 3000);
         }
     }
     return (
@@ -114,12 +144,12 @@ const TCModal = ({ isOpen, onClose }) => {
 
 
 
-                    <ModalCloseButton />
+                    {/* <ModalCloseButton /> */}
                 </ModalHeader>
 
 
                 <ModalBody
-                
+
                     maxHeight="60vh" // Set a maximum height
                     overflowY="scroll" // Enable vertical scrolling
                 >
@@ -173,6 +203,14 @@ const TCModal = ({ isOpen, onClose }) => {
                                     <strong>8. Governing Law</strong><br />
                                     These terms are governed by the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in [City/State].
                                 </Text>
+                                <Text fontSize={subtitle_size} fontWeight="500" color="#333">
+                                    <Checkbox colorScheme="blue" fontWeight="500" color="#333"
+                                        isChecked={isCheckedTC}
+                                        onChange={(e) => setIsCheckedTC(e.target.checked)}
+                                    >
+                                        I agree to the Terms and Conditions.
+                                    </Checkbox>
+                                </Text>
                             </VStack>
                             {/* <Box height="2px" width={["100%", "100%", "60%"]} bgColor="#3d3d3d" my={5} /> */}
 
@@ -212,8 +250,17 @@ const TCModal = ({ isOpen, onClose }) => {
                                 </Text>
                                 <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                                     {/* <strong>4. Payment and Refund Policy</strong><br /> */}
-                                    Psychometric Test Completion: Once the psychometric test has been attempted, the package is considered fully utilized, and no refunds will be granted under any circumstances                                </Text>
 
+                                    Psychometric Test Completion: Once the psychometric test has been attempted, the package is considered fully utilized, and no refunds will be granted under any circumstances
+                                </Text>
+                                <Text fontSize={subtitle_size} fontWeight="500" color="#333">
+                                    <Checkbox colorScheme="blue" fontWeight="500" color="#333"
+                                        isChecked={isCheckedCR}
+                                        onChange={(e) => setIsCheckedCR(e.target.checked)}
+                                    >
+                                        I agree to the Cancellation and Refund Policy.
+                                    </Checkbox>
+                                </Text>
                             </VStack>
                             {/* <Box height="2px" width={["100%", "100%", "60%"]} bgColor="#3d3d3d" my={5} /> */}
 
@@ -239,7 +286,7 @@ const TCModal = ({ isOpen, onClose }) => {
                                 // px={[2, 4, '100px']}
                                 mb={10}
                                 justifyContent="center"
-                                >
+                            >
                                 <Button
                                     bgColor={tilecolor_purple}
                                     color={'white'}
@@ -251,9 +298,11 @@ const TCModal = ({ isOpen, onClose }) => {
                                     onClick={() => { handleNext(); }}
                                 >
 
-                                    Proceed to pay
+                                    Proceed to pay {" Rs. " + selectedDiscountPrice}
 
                                 </Button>
+
+
                             </VStack>
                             {/* <Box height="2px" width={["100%", "100%", "60%"]} bgColor="#3d3d3d" my={5} /> */}
 
@@ -280,6 +329,8 @@ const TCModal = ({ isOpen, onClose }) => {
 
                         </Button>
                     )}
+                    {errorMessage && <div className="text-danger">{errorMessage}</div>}
+
                 </ModalFooter>
                 {/* )} */}
 

@@ -150,7 +150,7 @@ export default function Footer() {
             <Text textAlign={'start'}>Stay updated with all things career - trends, inspiration, and more.</Text>
             <Stack direction={'row'} spacing={4} align={'center'}>
               <SocialButton label={'Email'} href="mailto:info@careervidyalaya.com"
-                
+
               >
                 <FaEnvelope />
               </SocialButton>
@@ -196,7 +196,7 @@ export default function Footer() {
 
               {/* 2nd Stack */}
               <Stack direction={'column'} align={'start'} fontWeight={bold_font_weight} gap={'0'}>
-                <Text mb={footer_group_mb}>Contact Us</Text>
+                <Link to={'/contactus'}><Text mb={footer_group_mb}>Contact Us</Text></Link>
                 <Text mb={footer_group_mb}><Link to={'/termsandconditions'}>Terms and Conditions</Link></Text>
                 <Link to={'/privacypolicy'}><Text mb={footer_group_mb}>Privacy Policy</Text></Link>
                 <Text mb={footer_group_mb}>Disclaimer</Text>
@@ -205,7 +205,15 @@ export default function Footer() {
 
             {/* Footer Text */}
             <Box textAlign="center" pt={5}>
-              <Text>© 2024 Career Vidyalaya. All rights reserved.</Text>
+              <Text fontWeight={'bold'}>Career Vidyalaya</Text>
+              <Text>© 2024</Text>
+              <Text>
+                Powered by{' '}
+                <Text as="span" fontWeight="semibold">
+                  N & M LIFE SOLUTIONS PRIVATE LIMITED
+                </Text>
+              </Text>
+              <Text>All rights reserved.</Text>
             </Box>
           </Container>
         </Box>

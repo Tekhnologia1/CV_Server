@@ -41,6 +41,8 @@ const Routess = () => {
 
 
   const Services = React.lazy(() => import('../views/pages/home/Services'))
+  const AboutUs = React.lazy(() => import('../views/pages/home/AboutUs'))
+  const ContactUs = React.lazy(() => import('../views/pages/home/ContactUs'))
 
   //----------------Student ---------------------------------//
   const Student_Home = React.lazy(() => import('../views/Student/Student_Home'))
@@ -95,6 +97,8 @@ const Routess = () => {
           <Route path="/" name="Home Layout" element={<Home />} />
 
           <Route path="/services" name="Services" element={<Services />} />
+          <Route path="/aboutus" name="AboutUs" element={<AboutUs />} />
+          <Route path="/contactus" name="ContactUs" element={<ContactUs />} />
 
 
           {/* ----------------Student--------------------------------- */}

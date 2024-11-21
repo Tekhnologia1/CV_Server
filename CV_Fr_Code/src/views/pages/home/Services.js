@@ -84,6 +84,9 @@ const Services = () => {
     const regular_prize_size = ["xl", "xl", "2xl", "2xl"]
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
+
+    const [selectedDiscountPrice, setSelectedDiscountPrice] = React.useState(null);
+
     const openCheckOutModal = () => {
         setIsCheckoutOpen(true);
     }
@@ -91,6 +94,12 @@ const Services = () => {
     const closeCheckoutModal =()=> {
         setIsCheckoutOpen(false);
     }
+
+    const handleSubscribe = (price) => {
+        setSelectedDiscountPrice(price); // Save the discount price
+        openCheckOutModal(); // Open the modal
+    };
+    
     // Data for the 5 cards (images, titles, descriptions)
     const cardData1 = [
         {
@@ -351,7 +360,9 @@ const Services = () => {
 
                 {/* Section - Title, Plans (1 card per row) */}
                 <Box bg="#E7F9E4" p={5} mb={10} px={['30px', '30px', '30px', '5px', '5px']}>
-                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size} onClick={openCheckOutModal}>
+                    <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}
+                    // onClick={openCheckOutModal}
+                    >
                         Our Plans
                     </Heading>
                     <Box display="flex" justifyContent="center" alignItems="center">
@@ -376,12 +387,14 @@ const Services = () => {
                                 discountText={card.discountText}
                                 buttonText={card.buttonText}
                                 isRecommended={card.isRecommended}
+                                onSubscribe={handleSubscribe} // Pass the handler here
                             />
                         ))}
                     </SimpleGrid>
                     <TCModal
                         isOpen={isCheckoutOpen}
                         onClose={closeCheckoutModal}
+                        selectedDiscountPrice={selectedDiscountPrice} // Pass the price to the modal
 
                     />
                     <Text fontSize={regular_prize_size} textAlign="center" mt={5}>
@@ -540,7 +553,7 @@ const SlicerCardComponent = ({ image, testi_name, description }) => {
 };
 
 
-const CardWithButtonComponent = ({ image1, image2, title, description, price, discountPrice, regularPrice, discountText, buttonText, isRecommended }) => {
+const CardWithButtonComponent = ({ image1, image2, title, description, price, discountPrice, regularPrice, discountText, buttonText, isRecommended, onSubscribe  }) => {
 
     const tilecolor_purple = '#4d3acc';
 
@@ -639,7 +652,7 @@ const CardWithButtonComponent = ({ image1, image2, title, description, price, di
                         fontSize={regular_prize_size}
                         rounded={'none'}
                         w={{ base: '100%', sm: 'auto' }} // Full width on small screens
-                        
+                        onClick={() => onSubscribe(discountPrice)} // Pass discountPrice to the parent
                     >
                         {buttonText || 'Subscribe'}
                     </Button>

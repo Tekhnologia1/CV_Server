@@ -75,7 +75,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
   //---------------------------
-  
+
   const { genders } = ArrayData();
   const [gender, setGender] = useState('');
 
@@ -96,19 +96,19 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   // console.log(photo);
   //--------------------------------
   const { educations } = ArrayData();
- 
+
   const [education, setEducation] = useState('');
 
   const { experiences } = ArrayData();
-  
+
   const [experience, setExperience] = useState('');
 
   const { jobtimings } = ArrayData();
-  
+
   const [jobTime, setJobTime] = useState('');
 
   const { consultingPrefs } = ArrayData();
-  
+
   const [consultingPref, setConsultingPref] = useState('');
   //Docu
   const [IdProof, setIdProof] = useState(null);
@@ -186,6 +186,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
   const closeSignUp = () => {
     onClose();
+    vanishData();
     setCurrentModal('roleSelection');
     setCurrentScreen('roleSelection');
     setOTP('');
@@ -201,9 +202,6 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           setRole_id('4')
 
   };
-
-
-
 
 
   const handleCurrScreen = (screen_name) => {
@@ -277,16 +275,33 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
   //---------Validations---------------------------------------------------------------
 
+  const vanishData = () => {
+
+    setFirstName('');
+    setFNameError('');
+    setLastName('');
+    setLNameError('');
+    setContact('');
+    setContactError('');
+    setEmail('');
+    setEmailError('');
+    setPassword('');
+    setPasswordError('');
+    setFileError('');
+    setErrorMessage('');
+
+  }
+
   const validateFName = (e) => {
     setFirstName(e.target.value);
     if (firstName.length === 0) {
-      setFNameError('Name must be at least 2 characters long.');
+      // setFNameError('Name must be at least 2 characters long.');
       return false;
     }
     setFNameError('');
     const regex = /^[a-zA-Z\s]+$/;
     if (firstName.length < 1) {
-      setFNameError('Name must be at least 2 characters long.');
+      // setFNameError('Name must be at least 2 characters long.');
       return false;
     } else if (regex.test(firstName)) {
       setFNameError('');
@@ -300,13 +315,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   const validateLName = (e) => {
     setLastName(e.target.value);
     if (lastName.length === 0) {
-      setLNameError('Name must be at least 2 characters long.');
+      // setLNameError('Name must be at least 2 characters long.');
       return false;
     }
     setLNameError('');
     const regex = /^[a-zA-Z\s]+$/;
     if (lastName.length < 1) {
-      setLNameError('Name must be at least 2 characters long.');
+      // setLNameError('Name must be at least 2 characters long.');
       return false;
     } else if (regex.test(lastName)) {
       setLNameError('');
@@ -326,7 +341,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
         setEmailError('');
         return true;
       } else {
-        setEmailError('Enter valid email address.');
+        // setEmailError('Enter valid email address.');
         return false;
       }
     } else {
@@ -347,7 +362,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
       if (contactNo.length === 0) {
         setContactError('Contact number must not be blank.');
       } else {
-        setContactError('Contact number must be exactly 10 digits and contain only numbers.');
+        // setContactError('Contact number must be exactly 10 digits and contain only numbers.');
       }
       return false;
     }
@@ -362,7 +377,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
       setPasswordError('');
       return true;
     } else {
-      setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
+      // setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
       return false;
     }
   };
@@ -373,12 +388,12 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
   const validateAllFields = () => {
     if (!validateFName({ target: { value: firstName } })) {
-      setFNameError('Enter valid name.');
+      setFNameError('Enter valid first name.');
       return;
     }
 
     if (!validateLName({ target: { value: lastName } })) {
-      setLNameError('Enter valid name.');
+      setLNameError('Enter valid last name.');
       return;
     }
 
@@ -389,7 +404,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     }
 
     if (!validateEmail({ target: { value: email } })) {
-      setEmailError('Invalid Email.');
+      setEmailError('Enter valid Email address.');
       return;
     }
 
@@ -489,7 +504,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
     if (currentModal === 'student' || currentModal === 'parent' || currentModal === 'counsellor') {
       formData.append('photo', photo);
-     
+
     }
 
     formData.forEach((value, key) => {

@@ -85,6 +85,7 @@ const SignInModal = ({ isOpen, onClose }) => {
     }, [currentScreen, navigate]);
 
 
+
     const openSignUpModal = () => {
         setIsSignUpOpen(true);
         onClose();
@@ -97,6 +98,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
     const closeSignIn = () => {
         onClose();
+        vanishData();
         setCurrentModal('signIn');
         setCurrentScreen('signIn');
     }
@@ -113,7 +115,17 @@ const SignInModal = ({ isOpen, onClose }) => {
 
     //---------Validations---------------------------------------------------------------
 
-    const  validateEmail = (e) => {
+    const vanishData = () => {
+
+
+        setEmail('');
+        setPassword('');
+        setEmailError('');
+        setPasswordError('');
+        setErrorMessage('');
+    }
+
+    const validateEmail = (e) => {
         if ((e.target.value).length >= 0) {
             setEmail(e.target.value);
             setEmailError('');
@@ -122,7 +134,7 @@ const SignInModal = ({ isOpen, onClose }) => {
                 setEmailError('');
                 return true;
             } else {
-                setEmailError('Enter valid email address.');
+                // setEmailError('Enter valid email address.');
                 return false;
             }
         } else {
@@ -140,7 +152,7 @@ const SignInModal = ({ isOpen, onClose }) => {
             setPasswordError('');
             return true;
         } else {
-            setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
+            // setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
             return false;
         }
     };
@@ -153,7 +165,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
 
         if (!validateEmail({ target: { value: email } })) {
-            setEmailError('Invalid Email.');
+            setEmailError('Enter valid email address.');
             return;
         }
         if (!validatePassword({ target: { value: password } })) {
@@ -194,6 +206,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
             if (response.status && response.message === 'Login successful') {
                 // setSuccessMessage('Logged in successfully!');
+                setErrorMessage("");
 
                 Auth.login(token);
                 setIsLoading(false); // Stop loading
@@ -208,10 +221,10 @@ const SignInModal = ({ isOpen, onClose }) => {
                 // setSuccessMessage('');
                 setIsLoading(false); // Stop loading
                 console.log('Error');
-                setErrorMessage("Invalid credentials");
-                const timer = setTimeout(() => {
-                    setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
-                }, 1000); // 5 seconds delay
+                setErrorMessage("Enter valid credentials");
+                // const timer = setTimeout(() => {
+                //     setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
+                // }, 1000); // 5 seconds delay
 
             }
 
@@ -229,10 +242,10 @@ const SignInModal = ({ isOpen, onClose }) => {
             //   }
             //   setSuccessMessage('');
             setIsLoading(false); // Stop loading
-            setErrorMessage("Invalid credentials");
-            const timer = setTimeout(() => {
-                setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
-            }, 1000); // 5 seconds delay
+            setErrorMessage("Enter valid credentials");
+            // const timer = setTimeout(() => {
+            //     setErrorMessage(''); // Redirect after 5 seconds or adjust as needed
+            // }, 1000); // 5 seconds delay
 
         });
     };

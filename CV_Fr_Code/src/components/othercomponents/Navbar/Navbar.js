@@ -111,6 +111,9 @@ const Navbar = () => {
               color: linkHoverColor,
               bg: '#f2f0ed',
             }}
+            paddingInline={1
+              
+            }
             onClick={openSignInModal}>
             Sign In
           </Button>
@@ -336,7 +339,12 @@ const NAV_ITEMS = [
 
   {
     label: 'Contact Us',
-    href: '#',
+    href: '/contactus',
+  },
+
+  {
+    label: 'About Us',
+    href: '/aboutus',
   },
 
 

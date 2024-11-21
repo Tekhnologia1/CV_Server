@@ -153,8 +153,13 @@ const getNavItems = (role) => [
     },
     {
         label: 'Contact Us',
-        href: '#'
-    },
+        href: '/contactus',
+      },
+    
+      {
+        label: 'About Us',
+        href: '/aboutus',
+      },
 ];
 
 // Desktop Navigation Component
