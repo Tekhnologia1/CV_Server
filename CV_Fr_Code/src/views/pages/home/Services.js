@@ -173,7 +173,7 @@ const Services = () => {
             plan_image: plan1_image,
             image: Triforce,
             title: 'Basic',
-            description: ['Testing solutions - DMIT and Psychometric tests', 'Personalized report for DMIT and Psychometric tests', '30 minutes counseling including report reviews and Q & A', 'Limited access to community resources'],
+            description: ['Testing solutions - DMIT and Psychometric tests', 'Personalized report for DMIT and Psychometric tests', '30 minutes consulting including report reviews and Q & A', 'Limited access to community resources'],
             discountPrice: '2,999',
             regularPrice: '4,999',
             discountText: '40% off',

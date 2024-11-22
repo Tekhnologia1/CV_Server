@@ -35,7 +35,7 @@ const VideoGrid = () => {
 
     useEffect(() => {
         const currentRef = videoRefs.current[currentVideo];
-        console.log('Current Video Ref:', currentRef);
+        // console.log('Current Video Ref:', currentRef);
         if (!currentRef) {
             console.warn('Video ref not found for currentVideo:', currentVideo);
             return;
@@ -46,16 +46,16 @@ const VideoGrid = () => {
     }, [currentVideo]);
     
     const handleVideoEnded = () => {
-        console.log('Video ended:', currentVideo);
+        // console.log('Video ended:', currentVideo);
         if (currentVideo === videos.length - 1) {
             setTimeout(() => {
                 setCurrentVideo(0); // Restart
-                console.log('Restarting videos');
+                // console.log('Restarting videos');
             }, 1000); // 1 second delay
         } else {
             setCurrentVideo((prev) => {
                 const nextVideo = prev + 1;
-                console.log('Proceeding to next video:', nextVideo);
+                // console.log('Proceeding to next video:', nextVideo);
                 return nextVideo;
             });
         }
@@ -77,6 +77,7 @@ const VideoGrid = () => {
                         autoPlay={index === currentVideo}
                         loop={false}
                         muted
+                        playsInline
                         onEnded={handleVideoEnded}
 
                     />

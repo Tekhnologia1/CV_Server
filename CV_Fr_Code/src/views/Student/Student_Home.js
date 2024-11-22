@@ -128,7 +128,7 @@ const Student_Home = () => {
         {
             image: Star,
             title: 'Advanced',
-            description: ['Includes all services from basic package', 'A 30 minutes counseling session with student to finalize the career option'],
+            description: ['Includes all services from basic package', 'A 30 minutes consulting session with student to finalize the career option'],
         },
         {
             image: Crown,

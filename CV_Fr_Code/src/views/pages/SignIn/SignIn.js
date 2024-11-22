@@ -14,7 +14,9 @@ import {
     Image,
     Text,
     VStack,
-    Spinner // Import the Spinner component
+    Spinner, // Import the Spinner component
+    InputGroup,
+    InputRightElement
 
 } from '@chakra-ui/react';
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
@@ -29,6 +31,7 @@ import { UserContext } from 'src/context/UserContextProvider';
 import { useNavigate } from 'react-router-dom';
 import { api_url } from 'src/services/api/APIURL';
 import axios from 'axios';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 // import handleRoleClick from "../signup/Signup";
 
@@ -47,6 +50,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false); // Loading state
 
     //------------------------
@@ -155,6 +159,10 @@ const SignInModal = ({ isOpen, onClose }) => {
             // setPasswordError('Password must be at least 8 characters long and contain both letters and numbers.');
             return false;
         }
+    };
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
     };
 
 
@@ -381,7 +389,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
                                 />
                                 {emailError && <div className="text-danger">{emailError}</div>}
-                                <Input
+                                {/* <Input
                                     placeholder="Enter Password"
                                     type="password"
                                     size="lg"
@@ -390,11 +398,30 @@ const SignInModal = ({ isOpen, onClose }) => {
                                     borderRadius="5px"
                                     fontSize={{ base: "sm", md: "md" }}
                                     onChange={validatePassword}
-                                />
+                                /> */}
+
+                                <InputGroup size="lg">
+                                    <Input
+                                        placeholder="Enter Password"
+                                        type={showPassword ? "text" : "password"}
+                                        focusBorderColor="blue.500"
+                                        bg="white"
+                                        borderRadius="5px"
+                                        fontSize={{ base: "sm", md: "md" }}
+                                        onChange={validatePassword}
+                                    />
+                                    <InputRightElement width="4.5rem">
+                                        <Button h="1.75rem" size="sm" onClick={toggleShowPassword}>
+                                            {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+
+
                                 {passwordError && <div className="text-danger">{passwordError}</div>}
 
                                 <Link href="#" alignSelf="flex-start" color="black" fontSize={{ base: "xs", md: "sm" }} textDecoration={'underline'}>
-                                    Forgot Password?
+                                    Forgot Password ?
                                 </Link>
                             </VStack>
                         )}
@@ -413,7 +440,12 @@ const SignInModal = ({ isOpen, onClose }) => {
                                         {currentModal === 'Counsellor' ? 'Consultant' :
                                             currentModal === 'B2B' ? 'Strategic Partner' :
                                                 currentModal === user_role && (user_role)
-                                        } ID : 0000
+                                        } ID : 
+                                        {currentModal === 'Counsellor' ? ' CVCO' :
+                                            currentModal === 'B2B' ? ' CVSP' :
+                                                currentModal === 'Student' ? ' CVST' :' CVPA'
+
+                                        }00{ user_id }
                                     </Text>
                                 </Box>
                             </VStack>
@@ -448,7 +480,7 @@ const SignInModal = ({ isOpen, onClose }) => {
 
 
                             <Text fontSize={{ base: "sm", md: "md" }}>
-                                New here?{' '}
+                                New here ?{' '}
                                 <Link
                                     href="#"
                                     color={tilecolor_purple}

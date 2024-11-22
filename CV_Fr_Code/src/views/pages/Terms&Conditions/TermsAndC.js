@@ -46,7 +46,7 @@ const TermsAndC = () => {
                         </Text>
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                             <strong>2. Services Provided</strong><br />
-                            Career Vidyalaya offers career counseling services, including psychometric assessments, one-on-one consultations, and other guidance programs. Services are intended to support educational and career development, and results are provided based on individual assessments.
+                            Career Vidyalaya offers career consulting services, including psychometric assessments, one-on-one consultations, and other guidance programs. Services are intended to support educational and career development, and results are provided based on individual assessments.
                         </Text>
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                             <strong>3. User Eligibility</strong><br />
@@ -58,7 +58,7 @@ const TermsAndC = () => {
                         </Text>
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                             <strong>5. Limitation of Liability</strong><br />
-                            Career Vidyalaya is not liable for any direct, indirect, incidental, or consequential damages arising from the use of our services. We do not guarantee specific results from our counseling, as outcomes may vary based on individual circumstances.
+                            Career Vidyalaya is not liable for any direct, indirect, incidental, or consequential damages arising from the use of our services. We do not guarantee specific results from our consulting, as outcomes may vary based on individual circumstances.
                         </Text>
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                             <strong>6. Intellectual Property</strong><br />

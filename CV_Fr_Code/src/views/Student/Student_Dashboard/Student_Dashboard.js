@@ -150,7 +150,7 @@ const Student_Dashboard = () => {
         {
             image: Star,
             title: 'Advanced',
-            description: ['Includes all services from basic package', 'A 30 minutes counseling session with student to finalize the career option'],
+            description: ['Includes all services from basic package', 'A 30 minutes consulting session with student to finalize the career option'],
         },
         {
             image: Crown,
@@ -202,7 +202,7 @@ const Student_Dashboard = () => {
     return (
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
             <Box style={{ boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)' }}>
-            {!(role === 'Student' || role === 'Parent' || role === 'Counsellor' || role === 'B2B') ?
+                {!(role === 'Student' || role === 'Parent' || role === 'Counsellor' || role === 'B2B') ?
                     <Navbar /> :
                     <Navbar_with_login />
                 }
@@ -428,9 +428,12 @@ const Student_Dashboard = () => {
                             <Heading color="#ffffff" textAlign="center" fontSize={demo_title_size} >
                                 Still not sure about your plans?
                             </Heading>
-                            <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
-                                Subscribe
-                            </Button>
+                            <Link to={'/services'}>
+                                <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
+                                    Subscribe
+                                </Button>
+                            </Link>
+
                         </Grid>
                     </Flex>
                 )}

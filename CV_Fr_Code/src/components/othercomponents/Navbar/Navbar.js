@@ -111,9 +111,7 @@ const Navbar = () => {
               color: linkHoverColor,
               bg: '#f2f0ed',
             }}
-            paddingInline={1
-              
-            }
+            paddingInline={3}
             onClick={openSignInModal}>
             Sign In
           </Button>

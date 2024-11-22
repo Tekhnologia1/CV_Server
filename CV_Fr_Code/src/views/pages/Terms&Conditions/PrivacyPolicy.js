@@ -51,7 +51,7 @@ const PrivacyPolicy = () => {
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">
                             <strong>2. Use of Information</strong><br />
                             Personal information is used for conducting assessments, customizing guidance, and
-                            facilitating counseling sessions. Career Vidyalaya may also use your data for research and statistical analysis, but this will always be anonymized.
+                            facilitating consulting sessions. Career Vidyalaya may also use your data for research and statistical analysis, but this will always be anonymized.
 
                         </Text>
                         <Text fontSize={subtitle_size} fontWeight="500" color="#333">

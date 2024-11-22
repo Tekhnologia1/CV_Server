@@ -18,7 +18,9 @@ import {
   Spinner, // Import the Spinner component
   Select,
   FormControl,
-  FormLabel
+  FormLabel,
+  InputRightElement,
+  InputGroup
 
 } from '@chakra-ui/react';
 import SignInModal from '../SignIn/SignIn';
@@ -40,6 +42,7 @@ import { Country, State, City } from 'country-state-city';
 import { ICountry, IState, ICity } from 'country-state-city'
 import File_Upload from 'src/components/othercomponents/FileUploadComponent';
 import { ArrayData } from 'src/services/arrayData/ArrayData';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 
 const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
@@ -127,6 +130,9 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   const [otp, setOTP] = useState(''); // This will hold the final OTP number
   const [password, setPassword] = useState('');
   const [repassword, setRePassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRePassword, setShowRePassword] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const [succMessage, setSuccMessage] = useState('');
@@ -212,6 +218,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
   }
 
   const handleBackButton = () => {
+    vanishData();
     setOtpArray(Array(6).fill(""));
     setOTP("");
     if (currentScreen === 'enterDetails') {
@@ -287,9 +294,36 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     setEmailError('');
     setPassword('');
     setPasswordError('');
-    setFileError('');
+    setRePassword('');
+    setRePasswordError('');
     setErrorMessage('');
+    setState('');
+    setCity('');
+    setGender('');
+    setInstituteName('');
+    setStudClass('');
+    setOccup('');
+    setHighStudy('');
+    setEducation('');
+    setExperience('');
+    setJobTime('');
+    setConsultingPref('');
 
+    setphoto(null);
+    setIdProof(null);
+    setSscMarkSheet(null);
+    setHscMarkSheet(null);
+    setUgCertificate(null);
+    setPgCertificate(null);
+    setPhdCertificate(null);
+    setResume(null);
+    setphoto(null);
+    setphoto(null);
+    setFileError('');
+
+    setOtpArray(Array(6).fill(""));
+    setOTP("");
+    setErrMessage('');
   }
 
   const validateFName = (e) => {
@@ -451,16 +485,20 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
     }
   }
   const signUp = () => {
+    if (!(currentModal === 'counsellor' || currentModal === 'b2b')) {
 
-    if (!validatePassword({ target: { value: password } })) {
-      setPasswordError('Password must be at least 8 characters long and contain both letters and numbers');
-      return;
+      if (!validatePassword({ target: { value: password } })) {
+        setPasswordError('Password must be at least 8 characters long and contain both letters and numbers');
+        return;
+      }
+
+      if (!(password === repassword)) {
+        setRePasswordError('Password should match correctly');
+        return;
+      }
+
     }
 
-    if (!(password === repassword)) {
-      setRePasswordError('Password should match correctly');
-      return;
-    }
 
 
     console.log('entered signup');
@@ -634,6 +672,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           console.log(response.message);
           setIsLoading(false); // Stop loading
           console.log('Verification successful');
+          setErrMessage('');
           setSuccMessage('Verification successful !!');
           setTimeout(() => {
             setSuccMessage('');
@@ -655,6 +694,8 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           console.log('no code found');
           setSuccMessage('');
           setErrMessage('Please re-enter OTP');
+          setOtpArray(Array(6).fill(""));
+          setOTP("");
           console.log(response.error);
           setTimeout(() => {
             setErrMessage('');
@@ -667,22 +708,26 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           console.log('wrong OTP');
           setSuccMessage('');
           setErrMessage('Please enter correct OTP');
+          setOtpArray(Array(6).fill(""));
+          setOTP("");
           console.log(response.error);
-          setTimeout(() => {
-            setErrMessage('');
-          }, 1000);
+          // setTimeout(() => {
+          //   setErrMessage('');
+          // }, 1000);
           handleCurrScreen('getOTP');
 
         }
       }).catch((error) => {
-        console.error("OTP veify error: ", error);
+        console.error("OTP verify error: ", error);
         setSuccMessage('');
-        setErrMessage('Please try again');
+        setErrMessage('Please enter correct OTP');
+        setOtpArray(Array(6).fill(""));
+        setOTP("");
         // setErrMessage('Something went wrong, try again.');
         // setSuccMessage('');
-        setTimeout(() => {
-          setErrMessage('');
-        }, 1000);
+        // setTimeout(() => {
+        //   setErrMessage('');
+        // }, 1000);
         setIsLoading(false); // Stop loading
         handleCurrScreen('getOTP');
 
@@ -803,13 +848,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           {/* Conditional rendering for specific forms */}
           {currentModal === 'student' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              <Input placeholder="Enter First Name *" size="lg" bg={label_bgcolor} onChange={validateFName} />
               {fnameError && <div className="text-danger">{fnameError}</div>}
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              <Input placeholder="Enter Last Name *" size="lg" bg={label_bgcolor} onChange={validateLName} />
               {lnameError && <div className="text-danger">{lnameError}</div>}
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              <Input placeholder="Enter Contact Number *" size="lg" bg={label_bgcolor} onChange={validateContact} />
               {contactError && <div className="text-danger">{contactError}</div>}
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              <Input placeholder="Enter Email Address *" size="lg" bg={label_bgcolor} onChange={validateEmail} />
               {emailError && <div className="text-danger">{emailError}</div>}
 
               <Select
@@ -865,13 +910,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
           {currentModal === 'parent' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              <Input placeholder="Enter First Name *" size="lg" bg={label_bgcolor} onChange={validateFName} />
               {fnameError && <div className="text-danger">{fnameError}</div>}
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              <Input placeholder="Enter Last Name *" size="lg" bg={label_bgcolor} onChange={validateLName} />
               {lnameError && <div className="text-danger">{lnameError}</div>}
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              <Input placeholder="Enter Contact Number *" size="lg" bg={label_bgcolor} onChange={validateContact} />
               {contactError && <div className="text-danger">{contactError}</div>}
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              <Input placeholder="Enter Email Address *" size="lg" bg={label_bgcolor} onChange={validateEmail} />
               {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
@@ -932,13 +977,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
           {currentModal === 'counsellor' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              <Input placeholder="Enter First Name *" size="lg" bg={label_bgcolor} onChange={validateFName} />
               {fnameError && <div className="text-danger">{fnameError}</div>}
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              <Input placeholder="Enter Last Name *" size="lg" bg={label_bgcolor} onChange={validateLName} />
               {lnameError && <div className="text-danger">{lnameError}</div>}
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              <Input placeholder="Enter Contact Number *" size="lg" bg={label_bgcolor} onChange={validateContact} />
               {contactError && <div className="text-danger">{contactError}</div>}
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              <Input placeholder="Enter Email Address *" size="lg" bg={label_bgcolor} onChange={validateEmail} />
               {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
@@ -1018,23 +1063,23 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
               <File_Upload
                 onFileSelect={(file) => setIdProof(file)}
-                label="Id Proof"
+                label="Id Proof *"
               />
               <File_Upload
                 onFileSelect={(file) => setphoto(file)}
-                label="Photo"
+                label="Photo *"
               />
               <File_Upload
                 onFileSelect={(file) => setSscMarkSheet(file)}
-                label="10th Marksheet"
+                label="10th Marksheet *"
               />
               <File_Upload
                 onFileSelect={(file) => setHscMarkSheet(file)}
-                label="12th Marksheet"
+                label="12th Marksheet *"
               />
               <File_Upload
                 onFileSelect={(file) => setUgCertificate(file)}
-                label="UG Certificate"
+                label="UG Certificate *"
               />
               <File_Upload
                 onFileSelect={(file) => setPgCertificate(file)}
@@ -1046,7 +1091,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
               />
               <File_Upload
                 onFileSelect={(file) => setResume(file)}
-                label="Resume"
+                label="Resume *"
               />
 
               <Button colorScheme="red" width="100%" onClick={validateAllDocu}>
@@ -1061,13 +1106,13 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
 
           {currentModal === 'b2b' && currentScreen === 'enterDetails' && (
             <VStack spacing={4} width="100%">
-              <Input placeholder="Enter First Name" size="lg" bg={label_bgcolor} onChange={validateFName} />
+              <Input placeholder="Enter First Name *" size="lg" bg={label_bgcolor} onChange={validateFName} />
               {fnameError && <div className="text-danger">{fnameError}</div>}
-              <Input placeholder="Enter Last Name" size="lg" bg={label_bgcolor} onChange={validateLName} />
+              <Input placeholder="Enter Last Name *" size="lg" bg={label_bgcolor} onChange={validateLName} />
               {lnameError && <div className="text-danger">{lnameError}</div>}
-              <Input placeholder="Enter Contact Number" size="lg" bg={label_bgcolor} onChange={validateContact} />
+              <Input placeholder="Enter Contact Number *" size="lg" bg={label_bgcolor} onChange={validateContact} />
               {contactError && <div className="text-danger">{contactError}</div>}
-              <Input placeholder="Enter Email Address" size="lg" bg={label_bgcolor} onChange={validateEmail} />
+              <Input placeholder="Enter Email Address *" size="lg" bg={label_bgcolor} onChange={validateEmail} />
               {emailError && <div className="text-danger">{emailError}</div>}
               <Select
                 placeholder="Select State"
@@ -1102,7 +1147,7 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
           {/* Get OTP */}
           {currentScreen === 'getOTP' && (
             <VStack spacing={2} mt={4}>
-              <Text>Check your contact ******* and email ******* for the OTP</Text>
+              <Text>Check your email ******* for the OTP</Text>
 
               <Text>
                 {isLoading ? (
@@ -1204,12 +1249,51 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
             <VStack spacing={4} mt={4} alignItems="center"> {/* Added consistent spacing and alignment */}
 
               <Text fontSize="lg">Create Password</Text>
-              <Input placeholder="Enter password" size="lg" bg={label_bgcolor} mb={3} onChange={validatePassword} />
+              {/* <Input placeholder="Enter password" size="lg" bg={label_bgcolor} mb={3} onChange={validatePassword} /> */}
+
+              <InputGroup size="lg" mb={3}>
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Enter password *"
+                  bg={label_bgcolor}
+                  onChange={validatePassword}
+                />
+                <InputRightElement>
+                  <Button
+                    size="sm"
+                    onClick={() => setShowPassword(!showPassword)}
+                    bg="transparent"
+                    _hover={{ bg: 'gray.200' }}
+                  >
+                    {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
               {passwordError && <div className="text-danger">{passwordError}</div>}
 
 
               <Text fontSize="lg">Re-enter Password</Text>
-              <Input placeholder="Re-enter password" size="lg" bg={label_bgcolor} mb={3} onChange={(e) => setRePassword(e.target.value)} />
+              {/* <Input placeholder="Re-enter password" size="lg" bg={label_bgcolor} mb={3} onChange={(e) => setRePassword(e.target.value)} /> */}
+
+              <InputGroup size="lg" mb={3}>
+                <Input
+                  type={showRePassword ? 'text' : 'password'}
+                  placeholder="Re-enter password *"
+                  bg={label_bgcolor}
+                  onChange={(e) => setRePassword(e.target.value)}
+                />
+                <InputRightElement>
+                  <Button
+                    size="sm"
+                    onClick={() => setShowRePassword(!showRePassword)}
+                    bg="transparent"
+                    _hover={{ bg: 'gray.200' }}
+                  >
+                    {showRePassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+
               {repasswordError && <div className="text-danger">{repasswordError}</div>}
               {/* Password points list */}
               {createPassPoints.map((point, i) => (
@@ -1242,12 +1326,12 @@ const SignUpModal = ({ isOpen, onClose, openSignIn }) => {
             </VStack>
           )}
           {errMessage && (((currentModal === 'counsellor' || currentModal === 'b2b') && currentScreen === 'getOTP') || (currentModal === 'student' || currentModal === 'parent')) &&
-            <Text color='red' textAlign='center'>
+            <Text color='red' textAlign='center' mt={'10px'}>
               {errMessage}
             </Text>
           }
           {succMessage && !(currentModal === 'counsellor' || currentModal === 'b2b') &&
-            <Text color='green' textAlign='center'>
+            <Text color='green' textAlign='center'  mt={'10px'}>
               {succMessage}
             </Text>
           }
