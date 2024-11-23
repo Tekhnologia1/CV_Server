@@ -72,6 +72,15 @@ const Student_Dashboard = () => {
     //--------------
     const userId = user.userId;
 
+    //-------Navigate to section on another page-------
+    // const navigateToSection = () => {
+    //     navigate("/services#ourplans-section");
+    // };
+
+    const handleNavigate = () => {
+        navigate("/services", { state: { scrollToSection: true } });
+    };
+
 
     const cardData1 = [
         {
@@ -428,11 +437,11 @@ const Student_Dashboard = () => {
                             <Heading color="#ffffff" textAlign="center" fontSize={demo_title_size} >
                                 Still not sure about your plans?
                             </Heading>
-                            <Link to={'/services'}>
-                                <Button mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
-                                    Subscribe
-                                </Button>
-                            </Link>
+
+                            <Button onClick={handleNavigate} mt={[0, 5]} bgColor="#4d3acc" color="#ffffff" _hover={{ bgColor: "#8d7dfa" }} size="lg" px={[5, 10]} py={[6, 8]} fontSize={faq_title_size} fontWeight={['650', '650', '700']}>
+                                Subscribe
+                            </Button>
+
 
                         </Grid>
                     </Flex>

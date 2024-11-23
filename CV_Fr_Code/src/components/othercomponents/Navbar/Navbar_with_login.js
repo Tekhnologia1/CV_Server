@@ -31,19 +31,52 @@ import avatarImage from "src/assets/icons/avatar.png"; // Assuming the logo path
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from 'src/context/UserContextProvider';
+import { APIRegister } from 'src/services/api/APIRegister';
+import { api_url } from 'src/services/api/APIURL';
+import Welcome_image from "src/assets/icons/welcome_icons/parent.png";
+
 
 const Navbar = () => {
     const { user } = useContext(UserContext);
     const navigate = useNavigate();
     const [role, setRole] = useState('');
 
+    const [user_id, setUser_Id] = useState('');
+    const [imageFetch, setImageFetch] = useState('');
+    const imageBaseUrl = api_url;
+    // const [currentModal, setCurrentModal] = React.useState('');
+    const [user_role, setUser_Role] = useState('');
+
     useEffect(() => {
         setRole(user.role);
     }, [user])
 
+    useEffect(() => {
+        if (user?.userId) {
+            console.log(user.userId); // Log userId when user state changes
+            console.log(user.email);
+            console.log(user.role);
+            setUser_Id(user.userId);
+            handleRoleClick(user.role);
+            // handleCurrScreen('welcome');
+
+            // if (user.role) {
+            //     setCurrentScreen('welcome'); // Navigate to the welcome screen after successful login
+            // }
+
+        }
+    }, [user]);
+
     const { isOpen, onToggle } = useDisclosure();
     const linkHoverColor = useColorModeValue('gray.800', 'white');
 
+    // Navigate role and screen
+    const handleRoleClick = (role) => {
+        // setCurrentModal(role);
+        setUser_Role(role);
+        console.log(user_role);
+
+    };
     // // Modal state management
     // const [isSignInOpen, setIsSignInOpen] = useState(false);
     // const [isSignUpOpen, setIsSignUpOpen] = useState(false);
@@ -53,6 +86,19 @@ const Navbar = () => {
 
     // const openSignUpModal = () => setIsSignUpOpen(true);
     // const closeSignUpModal = () => setIsSignUpOpen(false);
+    useEffect(() => {
+
+        if (user_id) {
+            APIRegister().GetUserById(user_id).then((response) => {
+                console.log(response[0].firstName);
+                // setName(response[0].firstName);
+                const responseUrl = response[0].photo ? `${response[0].photo.replace(/\\/g, '/')}` : `Uploads/default.jpg`;
+                setImageFetch(imageBaseUrl + '/' + responseUrl);
+            }).catch((error) => {
+                console.error("Some error, solve it: ", error);
+            });
+        }
+    }, [user_id]);
 
     const NAV_ITEMS = getNavItems(role);
 
@@ -100,13 +146,37 @@ const Navbar = () => {
                 {/* Avatar with profile menu */}
                 <Link to={'/my_profile'}>
                     <Menu>
-                        <MenuButton as={Box} cursor="pointer">
-
-                            <Avatar size="lg" src={avatarImage} />
-
-                        </MenuButton>
-
+                        {user_role === 'B2B' ?
+                            (
+                                <MenuButton as={Box} cursor="pointer">
+                                    <Avatar size="lg" src={Welcome_image} />
+                                </MenuButton>
+                            )
+                            :
+                            (
+                                <Box display="flex" justifyContent="center">
+                                    <Box
+                                        width={{ base: "35px", md: "60px" }}
+                                        height={{ base: "35px", md: "60px" }}
+                                        borderRadius="50%"
+                                        overflow="hidden"
+                                        border={'1px'}
+                                        borderColor={'#919190'}
+                                    // mt={["-70px", "-60px", "-120px", "-120px", "-120px", "-120px"]}
+                                    >
+                                        <Image
+                                            src={imageFetch}
+                                            alt="Icon"
+                                            boxSize="100%"
+                                            objectFit="cover"
+                                        />
+                                    </Box>
+                                </Box>
+                            )
+                        }
                     </Menu>
+
+
                 </Link>
                 {/* Add SignIn and SignUp buttons here if needed */}
             </Flex>
@@ -154,12 +224,12 @@ const getNavItems = (role) => [
     {
         label: 'Contact Us',
         href: '/contactus',
-      },
-    
-      {
+    },
+
+    {
         label: 'About Us',
         href: '/aboutus',
-      },
+    },
 ];
 
 // Desktop Navigation Component

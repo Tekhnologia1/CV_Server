@@ -33,6 +33,7 @@ import banner_image1 from "src/assets/images/Home/banner_image1.png";
 import VideoGrid from "src/views/pages/home/VideoGrid";
 import { UserContext } from 'src/context/UserContextProvider';
 import AuthModals from "../SignIn/AuthModals";
+import { animateScroll as scroll } from 'react-scroll';
 
 
 const Home = () => {
@@ -42,8 +43,6 @@ const Home = () => {
     const [role, setRole] = useState('');
 
 
-
-
     useEffect(() => {
         setTimeout(() => {
             setRole(user.role);
@@ -51,8 +50,6 @@ const Home = () => {
         }, 3000); // 3 seconds delay
 
     }, [user])
-
-
 
 
     const cardBg = useColorModeValue('white', 'gray.700');
@@ -216,6 +213,7 @@ const Home = () => {
         setOpenSignIn(false);
 
     }
+
 
 
     return (
@@ -428,10 +426,19 @@ const CardComponent = ({ image, title, description }) => (
                 style={{ width: '100%', height: 'auto', maxWidth: '250px' }}
                 mb={[4, 6]} // Adding responsive margin-bottom to the image
             />
-            <Heading size="lg" mt={2} px={[4, 6, 8]}> {/* Responsive horizontal padding */}
+            <Heading size="lg" mt={2} px={[4, 6, 8]}
+                marginTop={title === 'Career Expedition' ? '21px' : '8px'}
+
+            > {/* Responsive horizontal padding */}
                 {title}
             </Heading>
-            <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px', '15px', '15px', '18px']}> {/* Responsive padding for description */}
+            <Text mt={2} px={[4, 6, 8]} color='#4d3acc' fontWeight={'bold'} fontSize={['15px', '15px', '15px', '18px']}
+                onClick={() => {
+                    setTimeout(() => {
+                        scroll.scrollToTop({ smooth: true, duration: 200 });
+                    }, 300); // Allow the page to render before scrolling
+                }}
+            > {/* Responsive padding for description */}
                 <Link to={'/services'}>
                     {description}
                 </Link>
@@ -533,7 +540,17 @@ const CardWithButtonComponent = ({ image, title, description }) => (
 
             {/* Button */}
 
-            <Button mt={4} color="white" bgColor="#4d3acc" _hover={{ bgColor: "#8d7dfa" }} width={['80%', '60%', '40%']}>
+            <Button mt={
+                title === 'Basic' ? ['16px','16px','16px','42px','58px','16px'] :
+                    title === 'Advanced' ? ['16px','16px','16px','22px','60px','39px'] :
+                    ['16px','16px','16px','0px','16px','16px'] 
+            } color="white" bgColor="#4d3acc" _hover={{ bgColor: "#8d7dfa" }} width={['80%', '60%', '40%']}
+                onClick={() => {
+                    setTimeout(() => {
+                        scroll.scrollToTop({ smooth: true, duration: 200 });
+                    }, 300); // Allow the page to render before scrolling
+                }}
+            >
                 <Link to={'/services'}>
                     See Details
                 </Link>

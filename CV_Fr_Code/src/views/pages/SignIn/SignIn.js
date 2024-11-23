@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import cv_brand_logo from "src/assets/brand/cv_brand_logo.png";
 import Student from "src/assets/icons/welcome_icons/student.png";
-import Parent from "src/assets/icons/welcome_icons/parent.png";
+import Welcome_image from "src/assets/icons/welcome_icons/parent.png";
 import { APIRegister } from 'src/services/api/APIRegister';
 import SignUpModal from '../signup/Signup';
 import { BiUnderline } from 'react-icons/bi';
@@ -58,6 +58,10 @@ const SignInModal = ({ isOpen, onClose }) => {
     const [passwordError, setPasswordError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [imageFetch, setImageFetch] = useState('');
+    const imageBaseUrl = api_url;
+
 
     useEffect(() => {
         if (user?.userId) {
@@ -259,45 +263,19 @@ const SignInModal = ({ isOpen, onClose }) => {
     };
     console.log(currentScreen);
 
-    // useEffect(() => {
-    //     if (user_id) {
-    //         console.log(user_id);
-    //         getUserById(user_id);  // Call the function only when user_id is available
-
-    //     }
-    // }, [user_id, getUserById]);  // Trigger the effect only when user_id changes
-
-    // const getUserById = (user_id) => {
-
-    //     try {
-    //         const response = await fetch(`${api_url}/User/${user_id}`);
-    //         if (!response.ok) {
-    //           throw new Error('Failed to fetch data');
-    //         }
-    //         const resdata = await response.json();
-    //         setFirmGlPairs(resdata.data);
-    //       } catch (error) {
-    //         console.error('Error fetching firm-GL pairs:', error);
-    //       }
-    // };
+ //---------Fetching User details to show name and photo
 
     useEffect(() => {
 
-        const getUserById = async () => {
-            try {
-                const response = await fetch(`${api_url}/User/${user_id}`);
-                // if (!response.ok) {
-                //     throw new Error('Failed to fetch data');
-                // }
-                const resdata = await response.json();
-                console.log(resdata[0].firstName);
-                setName(resdata[0].firstName);
-            } catch (error) {
-                console.log('Error fetching user data:', error);
-            }
-        };
         if (user_id) {
-            getUserById();
+            APIRegister().GetUserById(user_id).then((response) => {
+                console.log(response[0].firstName);
+                setName(response[0].firstName);
+                const responseUrl = response[0].photo ? `${response[0].photo.replace(/\\/g, '/')}` : `Uploads/default.jpg`;
+                setImageFetch(imageBaseUrl + '/' + responseUrl);
+            }).catch((error) => {
+                console.error("Some error, solve it: ", error);
+            });
         }
     }, [user_id]);
 
@@ -355,20 +333,37 @@ const SignInModal = ({ isOpen, onClose }) => {
                                 />
                             </Box>
                         )}
-                        {currentScreen === 'welcome' && (
+                        {/* {currentScreen === 'welcome' && (
 
                             <Box display="flex" justifyContent="center">
                                 <Image
-                                    src={currentModal === 'Student' ? Student :
-                                        currentModal === 'Parent' ? Parent :
-                                            currentModal === 'Counsellor' ? Parent : Parent
-                                    }
+                                    src={currentModal === 'B2B' ? Welcome_image : imageFetch}
                                     alt="Icon"
                                     boxSize={{ base: "50px", md: "200px" }}
                                     mt={'-120px'}
                                 />
                             </Box>
+                        )} */}
+
+                        {currentScreen === 'welcome' && (
+                            <Box display="flex" justifyContent="center">
+                                <Box
+                                    width={{ base: "130px", md: "200px" }}
+                                    height={{ base: "130px", md: "200px" }}
+                                    borderRadius="50%"
+                                    overflow="hidden"
+                                    mt={["-80px", "-70px", "-120px", "-120px", "-120px", "-120px"]}
+                                >
+                                    <Image
+                                        src={currentModal === 'B2B' ? Welcome_image : imageFetch}
+                                        alt="Icon"
+                                        boxSize="100%"
+                                        objectFit="cover"
+                                    />
+                                </Box>
+                            </Box>
                         )}
+
 
 
                         <ModalCloseButton />
@@ -440,12 +435,12 @@ const SignInModal = ({ isOpen, onClose }) => {
                                         {currentModal === 'Counsellor' ? 'Consultant' :
                                             currentModal === 'B2B' ? 'Strategic Partner' :
                                                 currentModal === user_role && (user_role)
-                                        } ID : 
+                                        } ID :
                                         {currentModal === 'Counsellor' ? ' CVCO' :
                                             currentModal === 'B2B' ? ' CVSP' :
-                                                currentModal === 'Student' ? ' CVST' :' CVPA'
+                                                currentModal === 'Student' ? ' CVST' : ' CVPA'
 
-                                        }00{ user_id }
+                                        }00{user_id}
                                     </Text>
                                 </Box>
                             </VStack>

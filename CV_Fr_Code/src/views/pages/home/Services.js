@@ -20,7 +20,7 @@ import {
     useBreakpointValue,
 } from '@chakra-ui/react';
 import { ArrowForwardIcon } from '@chakra-ui/icons';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 import Navbar from 'src/components/othercomponents/Navbar/Navbar'
 import Navbar_with_login from 'src/components/othercomponents/Navbar/Navbar_with_login'
@@ -31,7 +31,7 @@ import gateway_image2 from "src/assets/images/Home/gateway_image2.png";
 import gateway_image3 from "src/assets/images/Home/gateway_image3.png";
 import gateway_image4 from "src/assets/images/Home/gateway_image4.png";
 import gateway_image5 from "src/assets/images/Home/gateway_image5.png";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import top_image1 from "src/assets/images/Home/top_image1.png";
 import top_image2 from "src/assets/images/Home/top_image2.png";
 import card_3_image1 from "src/assets/images/Home/3_card_image1.png";
@@ -82,16 +82,38 @@ const Services = () => {
     const title_size = ["2xl", "3xl", "4xl", "5xl"]
     const discounted_price_size = ["3xl", "4xl", "5xl", "6xl"]
     const regular_prize_size = ["xl", "xl", "2xl", "2xl"]
+    const plans_bottom_line = ["lg", "lg", "xl", "xl"]
     const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-
     const [selectedDiscountPrice, setSelectedDiscountPrice] = React.useState(null);
+    const ourPlansSectionRef = useRef(null);
+    const location = useLocation();
+
+    //Navigate to section by scrolling on same page
+    const handleScrollToSection = () => {
+        ourPlansSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+    //-------------
+
+
+    //--Navigate from another page to some section of current page
+    useEffect(() => {
+        // Check if the state indicates navigation should scroll to the section
+        if (location.state?.scrollToSection) {
+            ourPlansSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+
+            // Reset the state to avoid scrolling on subsequent renders
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location, navigate]);
+    //-------------------
+
 
     const openCheckOutModal = () => {
         setIsCheckoutOpen(true);
     }
 
-    const closeCheckoutModal =()=> {
+    const closeCheckoutModal = () => {
         setIsCheckoutOpen(false);
     }
 
@@ -99,7 +121,7 @@ const Services = () => {
         setSelectedDiscountPrice(price); // Save the discount price
         openCheckOutModal(); // Open the modal
     };
-    
+
     // Data for the 5 cards (images, titles, descriptions)
     const cardData1 = [
         {
@@ -255,7 +277,10 @@ const Services = () => {
             <CButton
                 style={{ backgroundColor: btnBgColor, color: '#ffffff', borderColor: btnBgColor, fontSize: '1.2rem', marginTop: '30px' }}
                 onMouseEnter={() => setbtnBgColor('#8d7dfa')}
-                onMouseLeave={() => setbtnBgColor('#4d3acc')} >
+                onMouseLeave={() => setbtnBgColor('#4d3acc')}
+                onClick={handleScrollToSection}
+
+            >
                 {btnLabel}
             </CButton>
         </Box>
@@ -359,7 +384,10 @@ const Services = () => {
 
 
                 {/* Section - Title, Plans (1 card per row) */}
-                <Box bg="#E7F9E4" p={5} mb={10} px={['30px', '30px', '30px', '5px', '5px']}>
+                <Box bg="#E7F9E4" p={5} mb={10} px={['30px', '30px', '30px', '5px', '5px']}
+                    ref={ourPlansSectionRef}
+                    id="ourplans-section"
+                >
                     <Heading textAlign="center" mb={5} color={tilecolor_purple} fontSize={title_size}
                     // onClick={openCheckOutModal}
                     >
@@ -397,7 +425,7 @@ const Services = () => {
                         selectedDiscountPrice={selectedDiscountPrice} // Pass the price to the modal
 
                     />
-                    <Text fontSize={regular_prize_size} textAlign="center" mt={5}>
+                    <Text fontSize={plans_bottom_line} textAlign="center" mt={['60px']}>
                         Discounted introductory price is for the first three months.
                     </Text>
                 </Box>
@@ -553,7 +581,7 @@ const SlicerCardComponent = ({ image, testi_name, description }) => {
 };
 
 
-const CardWithButtonComponent = ({ image1, image2, title, description, price, discountPrice, regularPrice, discountText, buttonText, isRecommended, onSubscribe  }) => {
+const CardWithButtonComponent = ({ image1, image2, title, description, price, discountPrice, regularPrice, discountText, buttonText, isRecommended, onSubscribe }) => {
 
     const tilecolor_purple = '#4d3acc';
 

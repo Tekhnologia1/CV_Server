@@ -36,6 +36,7 @@ const APIRegister = () => {
       console.log(user_id);
       const response = await fetch(`${api_url}/User/${user_id}`);
       console.log(response);
+
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -46,6 +47,23 @@ const APIRegister = () => {
       throw error;
     }
   };
+
+  // const getUserById = async () => {
+  //   try {
+  //     const response = await fetch(`${api_url}/User/${user_id}`);
+  //     // if (!response.ok) {
+  //     //     throw new Error('Failed to fetch data');
+  //     // }
+  //     const resdata = await response.json();
+  //     console.log(resdata[0].firstName);
+  //     setName(resdata[0].firstName);
+  //     const responseUrl = resdata[0].photo ? `${resdata[0].photo.replace(/\\/g, '/')}` : `Uploads/default.jpg`;
+  //     setImageFetch(imageBaseUrl + '/' + responseUrl);
+  //   } catch (error) {
+  //     console.log('Error fetching user data:', error);
+  //     throw error;
+  //   }
+  // };
 
 
   const SendOTP = async (data) => {

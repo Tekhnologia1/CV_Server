@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require("cors");
 const sql = require('./config/database');
 const Router = require('./routes/routing');
+const path = require('path');
+
 
 const app = express();
 app.use(cors()); // Call cors as a function
@@ -15,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use the router
 app.use('/', Router);
+app.use('/Uploads', express.static(path.join(__dirname, 'Uploads'))); // for image path.
 
 // Simple route
 app.get("/", (req, res) => {

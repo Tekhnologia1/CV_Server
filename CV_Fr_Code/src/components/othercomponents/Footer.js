@@ -61,7 +61,7 @@ export default function Footer() {
     }
     setTimeout(() => {
       closeEmailModal();
-    }, 1000);
+    }, 2000);
   }
   const closeEmailModal = () => setOpenModal(false)
 
